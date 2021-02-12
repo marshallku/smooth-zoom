@@ -10,7 +10,12 @@
         "type": "git",
         "url": "git+https://github.com/marshall-ku/smooth-zoom.git"
     },
-    "keywords": [],
+    "keywords": [
+        "image",
+        "picture",
+        "zoom",
+        "zoom-images"
+    ],
     "author": {
         "name": "Marshall K",
         "email": "marshall@kakao.com",
