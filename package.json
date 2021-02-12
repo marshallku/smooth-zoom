@@ -1,6 +1,6 @@
 {
     "name": "smooth-zoom",
-    "version": "0.0.1",
+    "version": "0.0.2",
     "description": "",
     "main": "dist/zoom.min.js",
     "scripts": {
@@ -14,6 +14,7 @@
         "image",
         "picture",
         "zoom",
+        "zoomable",
         "zoom-images"
     ],
     "author": {

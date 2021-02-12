@@ -1,17 +1,43 @@
 # Smooth Zoom
 
-WIP...
+A light weight javascript library for zooming images.
 
 ![Zoom example](https://blog.kakaocdn.net/dn/ZAoBG/btqXb2GoVUf/ug9krF5SeoBaW8QvERBOj0/img.gif)
 
+## Install
+
+```
+npm install smooth-zoom
+# or
+yarn add smooth-zoom
+```
+
+## Usage
+
+Import with script tag
+
+```html
+<script src="node_modules/smooth-zoom/dist/zoom.browser.js"></script>
+<!-- or -->
+<script src="https://cdn.jsdelivr.net/npm/smooth-zoom@latest/dist/zoom.browser.js"></script>
+```
+
+Import as module
+
 ```javascript
-Zoom(".my-image");
+import Zoom from "smooth-zoom";
+```
+
+And calling it with any css-selector will make your image zoomed on click.
+
+```javascript
+Zoom(".zoomable");
 ```
 
 ## Options
 
 ```javascript
-Zoom("img", {
+Zoom(".zoomable", {
     originalizer: (src) => src.replace(/-[0-9]+\.jpg/, ".jpg"),
     background: "auto",
 });
