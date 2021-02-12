@@ -1,0 +1,32 @@
+{
+    "name": "smooth-zoom",
+    "version": "0.0.1",
+    "description": "",
+    "main": "dist/zoom.min.js",
+    "scripts": {
+        "build": "./node_modules/.bin/webpack"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/marshall-ku/smooth-zoom.git"
+    },
+    "keywords": [],
+    "author": {
+        "name": "Marshall K",
+        "email": "marshall@kakao.com",
+        "url": "https://marshall-ku.com"
+    },
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/marshall-ku/smooth-zoom/issues"
+    },
+    "homepage": "https://github.com/marshall-ku/smooth-zoom#readme",
+    "devDependencies": {
+        "babel-loader": "^8.2.2",
+        "css-loader": "^5.0.2",
+        "exports-loader": "^2.0.0",
+        "style-loader": "^2.0.0",
+        "webpack": "^5.21.2",
+        "webpack-cli": "^4.5.0"
+    }
+}

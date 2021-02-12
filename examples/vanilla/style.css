@@ -1,0 +1,73 @@
+html {
+    overflow-x: hidden;
+}
+
+html {
+    background: #121212;
+    color: #bbb;
+}
+
+article {
+    max-width: 860px;
+    margin: 0 auto;
+    line-height: 1.7;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+figure.large-block {
+    width: 1180px;
+    margin: 0 0 1rem -160px;
+    text-align: center;
+}
+
+img {
+    display: inline-block;
+    height: auto;
+    margin: 0 auto;
+    border-radius: 2px;
+    max-width: 100%;
+    cursor: zoom-in;
+    transition: transform 0.3s ease-in-out;
+}
+
+.float-block {
+    float: left;
+    margin: 10px;
+}
+
+.zoom {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.3s ease-in-out;
+    z-index: 90000;
+    cursor: zoom-out;
+}
+
+.zoom > .zoom__img {
+    position: relative;
+    z-index: 2;
+    cursor: zoom-out;
+}
+
+.zoom > .zoom__img > img {
+    transition: transform 0.3s ease-in-out;
+    cursor: zoom-out;
+}
+
+.zoom.zoom--removing > img {
+    z-index: 1;
+}
+
+.zoom__bg {
+    position: absolute;
+    background: #121212;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+}
+
+.zoom__bg.zoom__bg--reveal {
+    opacity: 0.95;
+}
