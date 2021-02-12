@@ -12,6 +12,7 @@ export default function Zoom(selector, options) {
     };
     const background =
         options && options.background ? options.background : null;
+
     const updateScreenSize = () => {
         const { documentElement } = document;
         screenSize.screenWidth =
@@ -21,6 +22,7 @@ export default function Zoom(selector, options) {
         screenSize.scrollBar =
             screenSize.screenWidth - documentElement.offsetWidth;
     };
+
     const zoom = (image) => {
         const src = image.currentSrc || image.src;
         const { srcset } = image;
@@ -34,13 +36,16 @@ export default function Zoom(selector, options) {
         const bg = document.createElement("div");
         const zoomContainer = document.createElement("div");
         const imageClone = document.createElement("img");
+
         let maxWidth = width;
+
         zoomContainer.append(bg);
         zoomContainer.style.top = `${top + window.scrollY}px`;
         zoomContainer.style.left = `${left}px`;
         zoomContainer.style.width = `${width}px`;
         zoomContainer.style.height = `${height}px`;
         document.body.append(zoomContainer);
+
         bg.classList.add("zoom__bg");
         bg.style.width = `${screenWidth}px`;
         // Add 0.2px beacuse the browser might make 0.1px gap between window and background layer.
@@ -48,19 +53,23 @@ export default function Zoom(selector, options) {
         bg.style.top = `${-halfY - 0.1}px`;
         // Add image.offsetsLeft because the image’s parent element’s width might be fixed
         bg.style.left = `${-halfX}px`;
+
         if (background) {
             if (background === "auto") {
                 const average = getAverageRGB(image);
                 bg.style.background = average
-                    ? `rgba(${average.r}, ${average.g}, ${average.b}, 0.95)`
-                    : "rgba(0,0,0,.95)";
+                    ? `rgb(${average.r}, ${average.g}, ${average.b})`
+                    : "rgb(0, 0, 0)";
             } else {
                 bg.style.background = background;
             }
         }
+
         zoomContainer.classList.add("zoom");
         zoomContainer.append(imageClone);
+
         const regex = /[0-9]+w/gm;
+
         if (height <= screenHeight && srcset) {
             const sizes = srcset.match(regex);
             if (sizes) {
@@ -83,11 +92,13 @@ export default function Zoom(selector, options) {
                     (maxWidth = (maxWidth * screenHeight) / maxHeight);
             }
         }
+
         imageClone.classList.add("zoom__img");
         imageClone.src = src;
         imageClone.srcset = srcset;
         imageClone.width = width;
         imageClone.height = height;
+
         setTimeout(() => {
             const originalImage = originalizer(src);
             // hide original image
@@ -106,6 +117,7 @@ export default function Zoom(selector, options) {
             imageClone.src = originalImage;
             imageClone.srcset = "";
         }, 30);
+
         const removeImage = () => {
             zoomContainer.classList.add("zoom--removing");
             bg.removeAttribute("style");
@@ -117,14 +129,18 @@ export default function Zoom(selector, options) {
             }, 300);
             window.removeEventListener("scroll", removeImage);
         };
+
         zoomContainer.addEventListener("click", removeImage, {
             once: true,
         });
+
         window.addEventListener("scroll", removeImage, { once: true });
     };
+
     const handleClick = (event) => {
         zoom(event.target);
     };
+
     const getAverageRGB = (img) => {
         const blockSize = 5;
         const rgb = { r: 0, g: 0, b: 0 };
@@ -135,16 +151,20 @@ export default function Zoom(selector, options) {
             img.naturalWidth || img.offsetWidth || img.width);
         const height = (canvas.height =
             img.naturalHeight || img.offsetHeight || img.height);
+
         let data;
         let i = -4;
         let length;
         let count = 0;
+
         ctx.drawImage(img, 0, 0);
+
         try {
             data = ctx.getImageData(0, 0, width, height);
         } catch (e) {
             return null;
         }
+
         length = data.data.length;
         while ((i += blockSize * 4) < length) {
             ++count;
@@ -152,13 +172,17 @@ export default function Zoom(selector, options) {
             rgb.g += data.data[i + 1];
             rgb.b += data.data[i + 2];
         }
+
         rgb.r = Math.floor(rgb.r / count);
         rgb.g = Math.floor(rgb.g / count);
         rgb.b = Math.floor(rgb.b / count);
+
         return rgb;
     };
+
     updateScreenSize();
     window.addEventListener("resize", updateScreenSize, { passive: true });
+
     document.querySelectorAll(selector).forEach((element) => {
         if (element.tagName === "IMG") {
             element.addEventListener("click", handleClick);

@@ -17,7 +17,7 @@ Zoom("img", {
 });
 ```
 
-| Property     | Type                    | Default             | Description                                                               |
-| ------------ | ----------------------- | ------------------- | ------------------------------------------------------------------------- |
-| originalizer | (src: string) => string | (src) => src        | Change images' src to original src                                        |
-| background   | string                  | rgba(0, 0, 0, 0.95) | Image's background color.<br>Use "auto" to get average color of the image |
+| Property     | Type                    | Default      | Description                                                               |
+| ------------ | ----------------------- | ------------ | ------------------------------------------------------------------------- |
+| originalizer | (src: string) => string | (src) => src | Change images' src to original src                                        |
+| background   | string                  | rgb(0, 0, 0) | Image's background color.<br>Use "auto" to get average color of the image |
