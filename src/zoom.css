@@ -12,10 +12,6 @@
 .zoom > .zoom__img {
     position: relative;
     z-index: 2;
-    cursor: zoom-out;
-}
-
-.zoom > .zoom__img > img {
     transition: transform 0.3s ease-in-out;
     cursor: zoom-out;
 }

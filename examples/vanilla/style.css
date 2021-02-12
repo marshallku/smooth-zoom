@@ -27,7 +27,6 @@ img {
     border-radius: 2px;
     max-width: 100%;
     cursor: zoom-in;
-    transition: transform 0.3s ease-in-out;
 }
 
 .float-block {
