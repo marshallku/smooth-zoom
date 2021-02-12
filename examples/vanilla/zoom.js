@@ -87,7 +87,7 @@ function Zoom(selector, options) {
         setTimeout(() => {
             const originalImage = originalizer(src);
             // hide original image
-            image.classList.add("hide");
+            image.style.opacity = "0";
             // reveal and center cloned image
             zoomContainer.style.transform = `translate3d(${wrapX}px, ${wrapY}px, 0)`;
             bg.classList.add("zoom__bg--reveal");
@@ -110,7 +110,7 @@ function Zoom(selector, options) {
             imageClone.removeAttribute("style");
             setTimeout(() => {
                 zoomContainer.remove();
-                image.classList.remove("hide");
+                image.style.opacity = "";
             }, 300);
             window.removeEventListener("scroll", removeImage);
         };
