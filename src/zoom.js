@@ -30,8 +30,6 @@ export default function Zoom(selector, options) {
         const { screenWidth, screenHeight, scrollBar } = screenSize;
         const rect = image.getBoundingClientRect();
         const { width, height, left, top } = rect;
-        const halfX = (screenWidth - width) / 2;
-        const halfY = (screenHeight - height) / 2;
         const wrapX = (screenWidth - scrollBar) / 2 - left - width / 2;
         const wrapY = -top + (screenHeight - height) / 2;
         const bg = document.createElement("div");
@@ -40,20 +38,14 @@ export default function Zoom(selector, options) {
 
         let maxWidth = image.naturalWidth;
 
-        zoomContainer.append(bg);
         zoomContainer.style.top = `${top + window.scrollY}px`;
         zoomContainer.style.left = `${left}px`;
         zoomContainer.style.width = `${width}px`;
         zoomContainer.style.height = `${height}px`;
+        document.body.append(bg);
         document.body.append(zoomContainer);
 
         bg.classList.add("zoom__bg");
-        bg.style.width = `${screenWidth}px`;
-        // Add 0.2px beacuse the browser might make 1px gap between window and background layer.
-        bg.style.height = `${screenHeight + 1}px`;
-        bg.style.top = `${-halfY - 0.5}px`;
-        // Add image.offsetsLeft because the image’s parent element’s width might be fixed
-        bg.style.left = `${-halfX}px`;
 
         if (background) {
             if (background === "auto") {
@@ -120,15 +112,22 @@ export default function Zoom(selector, options) {
 
         const removeImage = () => {
             zoomContainer.classList.add("zoom--removing");
-            bg.removeAttribute("style");
+            bg.classList.remove("zoom__bg--reveal");
             zoomContainer.style.transform = "";
             imageClone.removeAttribute("style");
             setTimeout(() => {
+                bg.remove();
                 zoomContainer.remove();
                 image.style.opacity = "";
             }, 300);
+            bg.removeEventListener("click", removeImage);
+            zoomContainer.removeEventListener("click", removeImage);
             window.removeEventListener("scroll", removeImage);
         };
+
+        bg.addEventListener("click", removeImage, {
+            once: true,
+        });
 
         zoomContainer.addEventListener("click", removeImage, {
             once: true,
