@@ -33,19 +33,18 @@ export default function Zoom(selector, options) {
         const wrapX = (screenWidth - scrollBar) / 2 - left - width / 2;
         const wrapY = -top + (screenHeight - height) / 2;
         const bg = document.createElement("div");
-        const zoomContainer = document.createElement("div");
         const imageClone = document.createElement("img");
 
         let maxWidth = image.naturalWidth;
 
-        zoomContainer.style.top = `${top + window.scrollY}px`;
-        zoomContainer.style.left = `${left}px`;
-        zoomContainer.style.width = `${width}px`;
-        zoomContainer.style.height = `${height}px`;
+        imageClone.style.top = `${top + window.scrollY}px`;
+        imageClone.style.left = `${left}px`;
+        imageClone.style.width = `${width}px`;
+        imageClone.style.height = `${height}px`;
         document.body.append(bg);
-        document.body.append(zoomContainer);
+        document.body.append(imageClone);
 
-        bg.classList.add("zoom__bg");
+        bg.classList.add("zoom-bg");
 
         if (background) {
             if (background === "auto") {
@@ -57,9 +56,6 @@ export default function Zoom(selector, options) {
                 bg.style.background = background;
             }
         }
-
-        zoomContainer.classList.add("zoom");
-        zoomContainer.append(imageClone);
 
         const regex = / ([0-9]+)w/gm;
 
@@ -85,43 +81,44 @@ export default function Zoom(selector, options) {
         maxHeight >= screenHeight &&
             (maxWidth = (maxWidth * screenHeight) / maxHeight);
 
-        imageClone.classList.add("zoom__img");
+        imageClone.classList.add("zoom-img");
         imageClone.src = src;
         imageClone.srcset = srcset;
         imageClone.width = width;
         imageClone.height = height;
 
         setTimeout(() => {
-            const originalImage = originalizer(src);
             // hide original image
             image.style.opacity = "0";
-            // reveal and center cloned image
-            zoomContainer.style.transform = `translate3d(${wrapX}px, ${wrapY}px, 0)`;
-            bg.classList.add("zoom__bg--reveal");
-            // scale up if needed
-            if (maxWidth !== width) {
-                imageClone.style.transform = `scale(${maxWidth / width})`;
-            }
-            if (height > screenHeight) {
-                imageClone.style.transform = `scale(${screenHeight / height})`;
-            }
-            // replace image's source to original source
-            imageClone.src = originalImage;
-            imageClone.srcset = "";
+            // reveal and center cloned image, scale up if needed
+            const scale =
+                height > screenHeight
+                    ? screenHeight / height
+                    : maxWidth !== width
+                    ? maxWidth / width
+                    : 1;
+
+            imageClone.style.transform = `matrix(${scale}, 0, 0, ${scale}, ${wrapX}, ${wrapY})`;
+            bg.classList.add("zoom-bg--reveal");
         }, 30);
 
+        setTimeout(() => {
+            // replace image's source to original source
+            imageClone.src = originalizer(src);
+            imageClone.srcset = "";
+        }, 300);
+
         const removeImage = () => {
-            zoomContainer.classList.add("zoom--removing");
-            bg.classList.remove("zoom__bg--reveal");
-            zoomContainer.style.transform = "";
-            imageClone.removeAttribute("style");
+            imageClone.classList.add("zoom--removing");
+            bg.classList.remove("zoom-bg--reveal");
+            imageClone.style.transform = "";
             setTimeout(() => {
                 bg.remove();
-                zoomContainer.remove();
+                imageClone.remove();
                 image.style.opacity = "";
             }, 300);
             bg.removeEventListener("click", removeImage);
-            zoomContainer.removeEventListener("click", removeImage);
+            imageClone.removeEventListener("click", removeImage);
             window.removeEventListener("scroll", removeImage);
         };
 
@@ -129,7 +126,7 @@ export default function Zoom(selector, options) {
             once: true,
         });
 
-        zoomContainer.addEventListener("click", removeImage, {
+        imageClone.addEventListener("click", removeImage, {
             once: true,
         });
 
