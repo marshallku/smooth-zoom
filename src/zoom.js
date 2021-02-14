@@ -15,6 +15,7 @@ export default function Zoom(selector, options) {
 
     const updateScreenSize = () => {
         const { documentElement } = document;
+
         screenSize.screenWidth =
             window.innerWidth || documentElement.clientWidth;
         screenSize.screenHeight =
@@ -37,7 +38,7 @@ export default function Zoom(selector, options) {
         const zoomContainer = document.createElement("div");
         const imageClone = document.createElement("img");
 
-        let maxWidth = width;
+        let maxWidth = image.naturalWidth;
 
         zoomContainer.append(bg);
         zoomContainer.style.top = `${top + window.scrollY}px`;
@@ -48,9 +49,9 @@ export default function Zoom(selector, options) {
 
         bg.classList.add("zoom__bg");
         bg.style.width = `${screenWidth}px`;
-        // Add 0.2px beacuse the browser might make 0.1px gap between window and background layer.
-        bg.style.height = `${screenHeight + 0.2}px`;
-        bg.style.top = `${-halfY - 0.1}px`;
+        // Add 0.2px beacuse the browser might make 1px gap between window and background layer.
+        bg.style.height = `${screenHeight + 1}px`;
+        bg.style.top = `${-halfY - 0.5}px`;
         // Add image.offsetsLeft because the image’s parent element’s width might be fixed
         bg.style.left = `${-halfX}px`;
 
@@ -68,30 +69,29 @@ export default function Zoom(selector, options) {
         zoomContainer.classList.add("zoom");
         zoomContainer.append(imageClone);
 
-        const regex = /[0-9]+w/gm;
+        const regex = / ([0-9]+)w/gm;
 
-        if (height <= screenHeight && srcset) {
+        if (srcset) {
             const sizes = srcset.match(regex);
+
             if (sizes) {
-                const ratio = height / width;
                 // Find image's largest width in 'srcset' attribtue
-                maxWidth =
-                    screenWidth > width
-                        ? +sizes.reduce((a, b) => {
-                              return `${Math.max(
-                                  +a.replace("w", ""),
-                                  +b.replace("w", "")
-                              )}`;
-                          })
-                        : width;
-                // Image's width shouldn't be larger than screen width
-                maxWidth >= screenWidth && (maxWidth = screenWidth);
-                // And height too
-                const maxHeight = maxWidth * ratio;
-                maxHeight >= screenHeight &&
-                    (maxWidth = (maxWidth * screenHeight) / maxHeight);
+                sizes.forEach((size) => {
+                    const sizeNum = +size.trim().replace("w", "");
+
+                    sizeNum > maxWidth && (maxWidth = sizeNum);
+                });
             }
         }
+
+        const ratio = height / width;
+
+        // Image's width shouldn't be larger than screen width
+        maxWidth >= screenWidth && (maxWidth = screenWidth);
+        // And height too
+        const maxHeight = maxWidth * ratio;
+        maxHeight >= screenHeight &&
+            (maxWidth = (maxWidth * screenHeight) / maxHeight);
 
         imageClone.classList.add("zoom__img");
         imageClone.src = src;
