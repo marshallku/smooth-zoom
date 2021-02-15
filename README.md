@@ -2,7 +2,7 @@
 
 A light weight javascript library for zooming images like Medium, Google Photos and more.
 
-![Zoom example](https://blog.kakaocdn.net/dn/crSAk8/btqXoaZq2e6/sKwSs0nCCK5kxHa5ZBxf7k/img.gif)
+![Zoom example](https://blog.kakaocdn.net/dn/bGIJcB/btqXgnLZRC1/YSa09cEo2qD1ntYCvhCNWK/img.gif)
 
 [👀 Demo](https://smooth-zoom.marshall-ku.com)
 
