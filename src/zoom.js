@@ -189,4 +189,11 @@ export default function Zoom(selector, options) {
             }
         }
     });
+
+    // Add cursor style for target
+    const style = document.createElement("style");
+    const head = document.head || document.getElementsByTagName("head")[0];
+
+    style.appendChild(document.createTextNode(`${selector}{cursor:zoom-in}`));
+    head.appendChild(style);
 }
