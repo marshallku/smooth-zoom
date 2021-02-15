@@ -1,8 +1,10 @@
 # Smooth Zoom
 
-A light weight javascript library for zooming images.
+A light weight javascript library for zooming images like Medium, Google Photos and more.
 
-![Zoom example](https://blog.kakaocdn.net/dn/ZAoBG/btqXb2GoVUf/ug9krF5SeoBaW8QvERBOj0/img.gif)
+![Zoom example](https://blog.kakaocdn.net/dn/crSAk8/btqXoaZq2e6/sKwSs0nCCK5kxHa5ZBxf7k/img.gif)
+
+[👀 Demo](https://smooth-zoom.marshall-ku.com)
 
 ## Install
 
