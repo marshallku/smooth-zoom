@@ -28,12 +28,25 @@ export default function Zoom(selector, options) {
         const src = image.currentSrc || image.src;
         const { srcset } = image;
         const { screenWidth, screenHeight, scrollBar } = screenSize;
-        const rect = image.getBoundingClientRect();
-        const { width, height, left, top } = rect;
+        const { width, height, left, top } = image.getBoundingClientRect();
         const wrapX = (screenWidth - scrollBar) / 2 - left - width / 2;
         const wrapY = -top + (screenHeight - height) / 2;
         const bg = document.createElement("div");
         const imageClone = document.createElement("img");
+
+        const removeImage = () => {
+            imageClone.classList.add("zoom--removing");
+            bg.classList.remove("zoom-bg--reveal");
+            imageClone.style.transform = "";
+            setTimeout(() => {
+                bg.remove();
+                imageClone.remove();
+                image.style.opacity = "";
+            }, 300);
+            bg.removeEventListener("click", removeImage);
+            imageClone.removeEventListener("click", removeImage);
+            window.removeEventListener("scroll", removeImage);
+        };
 
         let maxWidth = image.naturalWidth;
 
@@ -41,8 +54,6 @@ export default function Zoom(selector, options) {
         imageClone.style.left = `${left}px`;
         imageClone.style.width = `${width}px`;
         imageClone.style.height = `${height}px`;
-        document.body.append(bg);
-        document.body.append(imageClone);
 
         bg.classList.add("zoom-bg");
 
@@ -57,10 +68,8 @@ export default function Zoom(selector, options) {
             }
         }
 
-        const regex = / ([0-9]+)w/gm;
-
         if (srcset) {
-            const sizes = srcset.match(regex);
+            const sizes = srcset.match(/ ([0-9]+)w/gm);
 
             if (sizes) {
                 // Find image's largest width in 'srcset' attribtue
@@ -83,9 +92,11 @@ export default function Zoom(selector, options) {
 
         imageClone.classList.add("zoom-img");
         imageClone.src = src;
-        imageClone.srcset = srcset;
         imageClone.width = width;
         imageClone.height = height;
+
+        document.body.append(bg);
+        document.body.append(imageClone);
 
         setTimeout(() => {
             // hide original image
@@ -105,22 +116,7 @@ export default function Zoom(selector, options) {
         setTimeout(() => {
             // replace image's source to original source
             imageClone.src = originalizer(src);
-            imageClone.srcset = "";
         }, 300);
-
-        const removeImage = () => {
-            imageClone.classList.add("zoom--removing");
-            bg.classList.remove("zoom-bg--reveal");
-            imageClone.style.transform = "";
-            setTimeout(() => {
-                bg.remove();
-                imageClone.remove();
-                image.style.opacity = "";
-            }, 300);
-            bg.removeEventListener("click", removeImage);
-            imageClone.removeEventListener("click", removeImage);
-            window.removeEventListener("scroll", removeImage);
-        };
 
         bg.addEventListener("click", removeImage, {
             once: true,
