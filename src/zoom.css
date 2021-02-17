@@ -7,11 +7,8 @@
 .zoom-img {
     position: absolute;
     display: block;
+    will-change: transform;
     transition: transform 0.3s ease-in-out;
-}
-
-.zoom-img.zoom--removing > img {
-    z-index: 1;
 }
 
 .zoom-bg {
@@ -22,6 +19,7 @@
     height: 100vh;
     background: #121212;
     opacity: 0;
+    will-change: opacity;
     transition: opacity 0.3s ease-in-out;
 }
 

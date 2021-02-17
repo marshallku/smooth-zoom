@@ -35,7 +35,6 @@ export default function Zoom(selector, options) {
         const imageClone = document.createElement("img");
 
         const removeImage = () => {
-            imageClone.classList.add("zoom--removing");
             bg.classList.remove("zoom-bg--reveal");
             imageClone.style.transform = "";
             setTimeout(() => {
@@ -95,38 +94,28 @@ export default function Zoom(selector, options) {
         imageClone.width = width;
         imageClone.height = height;
 
+        bg.addEventListener("click", removeImage, { once: true });
+        imageClone.addEventListener("click", removeImage, { once: true });
+        window.addEventListener("scroll", removeImage, { once: true });
+
         document.body.append(bg);
         document.body.append(imageClone);
 
-        setTimeout(() => {
-            // hide original image
-            image.classList.add("zoom-original--hidden");
-            // reveal and center cloned image, scale up if needed
-            const scale =
-                height > screenHeight
-                    ? screenHeight / height
-                    : maxWidth !== width
-                    ? maxWidth / width
-                    : 1;
+        // Just for causing style recalculation
+        imageClone.offsetWidth;
 
-            imageClone.style.transform = `matrix(${scale}, 0, 0, ${scale}, ${wrapX}, ${wrapY})`;
-            bg.classList.add("zoom-bg--reveal");
+        // hide original image
+        image.classList.add("zoom-original--hidden");
+        // reveal and center cloned image, scale up if needed
+        const scale = maxWidth !== width ? maxWidth / width : 1;
 
-            setTimeout(() => {
-                // replace image's source to original source
-                imageClone.src = originalizer(src);
-            }, 300);
-        }, 30);
+        imageClone.style.transform = `matrix(${scale}, 0, 0, ${scale}, ${wrapX}, ${wrapY})`;
+        bg.classList.add("zoom-bg--reveal");
 
-        bg.addEventListener("click", removeImage, {
-            once: true,
+        imageClone.addEventListener("transitionend", () => {
+            // replace image's source to original source
+            imageClone.src = originalizer(src);
         });
-
-        imageClone.addEventListener("click", removeImage, {
-            once: true,
-        });
-
-        window.addEventListener("scroll", removeImage, { once: true });
     };
 
     const handleClick = (event) => {
