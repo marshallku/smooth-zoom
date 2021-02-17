@@ -28,3 +28,7 @@
 .zoom-bg.zoom-bg--reveal {
     opacity: 0.95;
 }
+
+.zoom-original--hidden {
+    visibility: hidden;
+}

@@ -41,7 +41,7 @@ export default function Zoom(selector, options) {
             setTimeout(() => {
                 bg.remove();
                 imageClone.remove();
-                image.style.opacity = "";
+                image.classList.remove("zoom-original--hidden");
             }, 300);
             bg.removeEventListener("click", removeImage);
             imageClone.removeEventListener("click", removeImage);
@@ -100,7 +100,7 @@ export default function Zoom(selector, options) {
 
         setTimeout(() => {
             // hide original image
-            image.style.opacity = "0";
+            image.classList.add("zoom-original--hidden");
             // reveal and center cloned image, scale up if needed
             const scale =
                 height > screenHeight
@@ -111,12 +111,12 @@ export default function Zoom(selector, options) {
 
             imageClone.style.transform = `matrix(${scale}, 0, 0, ${scale}, ${wrapX}, ${wrapY})`;
             bg.classList.add("zoom-bg--reveal");
-        }, 30);
 
-        setTimeout(() => {
-            // replace image's source to original source
-            imageClone.src = originalizer(src);
-        }, 300);
+            setTimeout(() => {
+                // replace image's source to original source
+                imageClone.src = originalizer(src);
+            }, 300);
+        }, 30);
 
         bg.addEventListener("click", removeImage, {
             once: true,
