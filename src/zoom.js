@@ -37,14 +37,19 @@ export default function Zoom(selector, options) {
         const removeImage = () => {
             bg.classList.remove("zoom-bg--reveal");
             imageClone.style.transform = "";
-            setTimeout(() => {
-                bg.remove();
-                imageClone.remove();
-                image.classList.remove("zoom-original--hidden");
-            }, 300);
+            imageClone.addEventListener(
+                "transitionend",
+                () => {
+                    bg.remove();
+                    image.classList.remove("zoom-original--hidden");
+                    imageClone.remove();
+                },
+                { once: true }
+            );
             bg.removeEventListener("click", removeImage);
             imageClone.removeEventListener("click", removeImage);
             window.removeEventListener("scroll", removeImage);
+            window.removeEventListener("resize", removeImage);
         };
 
         let maxWidth = image.naturalWidth;
@@ -97,6 +102,7 @@ export default function Zoom(selector, options) {
         bg.addEventListener("click", removeImage, { once: true });
         imageClone.addEventListener("click", removeImage, { once: true });
         window.addEventListener("scroll", removeImage, { once: true });
+        window.addEventListener("resize", removeImage, { once: true });
 
         document.body.append(bg);
         document.body.append(imageClone);
