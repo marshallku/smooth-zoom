@@ -1,5 +1,5 @@
 export default function Zoom(
-    selector: string,
+    selector: string | HTMLElement | NodeList,
     options?: {
         originalizer?: (src: string) => string;
         background?: string;

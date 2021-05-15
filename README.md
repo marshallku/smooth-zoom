@@ -30,10 +30,17 @@ Import as module
 import Zoom from "smooth-zoom";
 ```
 
-And calling it with any css-selector will make your image zoomed on click.
+And calling it with any css-selector, HTMLElement, and NodeList will make your image zoomed on click.
 
 ```javascript
+// Css Selector
 Zoom(".zoomable");
+
+// HTMLElement
+Zoom(document.querySelector(".zoomable"));
+
+// NodeList
+Zoom(document.querySelectorAll(".zoomable"));
 ```
 
 ## Options

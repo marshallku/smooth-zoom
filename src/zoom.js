@@ -1,4 +1,4 @@
-export default function Zoom(selector, options) {
+export default function Zoom(target, options) {
     const originalizer =
         options && options.originalizer
             ? options.originalizer
@@ -167,10 +167,7 @@ export default function Zoom(selector, options) {
         return rgb;
     };
 
-    updateScreenSize();
-    window.addEventListener("resize", updateScreenSize, { passive: true });
-
-    document.querySelectorAll(selector).forEach((element) => {
+    const addZoomEvent = (element) => {
         if (element.tagName === "IMG") {
             element.addEventListener("click", handleClick);
         } else {
@@ -179,12 +176,29 @@ export default function Zoom(selector, options) {
                 childImg.addEventListener("click", handleClick);
             }
         }
-    });
+    };
+
+    updateScreenSize();
+    window.addEventListener("resize", updateScreenSize, { passive: true });
+
+    if (typeof target === "string") {
+        document.querySelectorAll(target).forEach((element) => {
+            addZoomEvent(element);
+        });
+    } else if (target instanceof HTMLElement) {
+        addZoomEvent(target);
+    } else if (target instanceof NodeList) {
+        target.forEach((element) => {
+            addZoomEvent(element);
+        });
+    }
 
     // Add cursor style for target
-    const style = document.createElement("style");
-    const head = document.head || document.getElementsByTagName("head")[0];
+    if (typeof target === "string") {
+        const style = document.createElement("style");
+        const head = document.head || document.getElementsByTagName("head")[0];
 
-    style.appendChild(document.createTextNode(`${selector}{cursor:zoom-in}`));
-    head.appendChild(style);
+        style.appendChild(document.createTextNode(`${target}{cursor:zoom-in}`));
+        head.appendChild(style);
+    }
 }
