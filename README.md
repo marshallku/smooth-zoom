@@ -30,14 +30,19 @@ Import as module
 import Zoom from "smooth-zoom";
 ```
 
-And calling it with any css-selector, HTMLElement, and NodeList will make your image zoomed on click.
+And calling it with any css-selector, HTMLElement (or Array of it), and NodeList will make your image zoomed on click.
 
 ```javascript
 // Css Selector
 Zoom(".zoomable");
 
-// HTMLElement
+// HTMLElement || HTMLElement[]
 Zoom(document.querySelector(".zoomable"));
+
+Zoom([
+    document.querySelector(".foo"),
+    ...document.querySelectorAll(".zoomable"),
+]);
 
 // NodeList
 Zoom(document.querySelectorAll(".zoomable"));
@@ -56,3 +61,27 @@ Zoom(".zoomable", {
 | ------------ | ----------------------- | ------------ | ------------------------------------------------------------------------- |
 | originalizer | (src: string) => string | (src) => src | Change images' src to original src                                        |
 | background   | string                  | rgb(0, 0, 0) | Image's background color.<br>Use "auto" to get average color of the image |
+
+## Methods
+
+#### `zoom(img: HTMLImageElement) => void`
+
+Zoom-in an image
+
+```javascript
+const zoom = Zoom();
+
+zoom.zoom(document.querySelector("img"));
+```
+
+#### `attach(target: string | HTMLElement | NodeList | HTMLElement[]) => void`
+
+Make the target zoomed on click
+
+```javascript
+const zoom = Zoom(".zoomable", {
+    background: "rgba(0, 0, 0, .3)",
+});
+
+zoom.attach(".more-elements");
+```

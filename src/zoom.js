@@ -167,7 +167,32 @@ export default function Zoom(target, options) {
         return rgb;
     };
 
+    const attach = (target) => {
+        if (!target) return;
+
+        if (typeof target === "string") {
+            document.querySelectorAll(target).forEach(addZoomEvent);
+        } else if (target instanceof HTMLElement) {
+            addZoomEvent(target);
+        } else if (target instanceof NodeList || target instanceof Array) {
+            target.forEach(addZoomEvent);
+        }
+
+        // Add cursor style for target
+        if (typeof target === "string") {
+            const style = document.createElement("style");
+            const head =
+                document.head || document.getElementsByTagName("head")[0];
+
+            style.appendChild(
+                document.createTextNode(`${target}{cursor:zoom-in}`)
+            );
+            head.appendChild(style);
+        }
+    };
+
     const addZoomEvent = (element) => {
+        if (!(element instanceof HTMLElement)) return;
         if (element.tagName === "IMG") {
             element.addEventListener("click", handleClick);
         } else {
@@ -181,24 +206,10 @@ export default function Zoom(target, options) {
     updateScreenSize();
     window.addEventListener("resize", updateScreenSize, { passive: true });
 
-    if (typeof target === "string") {
-        document.querySelectorAll(target).forEach((element) => {
-            addZoomEvent(element);
-        });
-    } else if (target instanceof HTMLElement) {
-        addZoomEvent(target);
-    } else if (target instanceof NodeList) {
-        target.forEach((element) => {
-            addZoomEvent(element);
-        });
-    }
+    attach(target);
 
-    // Add cursor style for target
-    if (typeof target === "string") {
-        const style = document.createElement("style");
-        const head = document.head || document.getElementsByTagName("head")[0];
-
-        style.appendChild(document.createTextNode(`${target}{cursor:zoom-in}`));
-        head.appendChild(style);
-    }
+    return {
+        zoom,
+        attach,
+    };
 }
