@@ -76,7 +76,7 @@ export default function Zoom(target, options) {
             const sizes = srcset.match(/ ([0-9]+)w/gm);
 
             if (sizes) {
-                // Find image's largest width in 'srcset' attribtue
+                // Find image's largest width in 'srcset' attribute
                 sizes.forEach((size) => {
                     const sizeNum = +size.trim().replace("w", "");
 
