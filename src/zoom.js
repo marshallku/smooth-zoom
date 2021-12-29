@@ -1,17 +1,11 @@
-export default function Zoom(target, options) {
-    const originalizer =
-        options && options.originalizer
-            ? options.originalizer
-            : (src) => {
-                  return src;
-              };
+export default function Zoom(target, options = {}) {
+    const originalizer = options.originalizer || ((src) => src);
     const screenSize = {
         screenWidth: 0,
         screenHeight: 0,
         scrollBar: 0,
     };
-    const background =
-        options && options.background ? options.background : null;
+    const background = options.background;
 
     const updateScreenSize = () => {
         const { documentElement } = document;
