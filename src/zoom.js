@@ -71,22 +71,24 @@ export default function Zoom(target, options = {}) {
 
             if (sizes) {
                 // Find image's largest width in 'srcset' attribute
-                sizes.forEach((size) => {
-                    const sizeNum = +size.trim().replace("w", "");
+                const largeSizes = sizes
+                    .map((x) => +x.trim().replace("w", ""))
+                    .filter((x) => !isNaN(x))
+                    .filter((x) => x > maxWidth);
 
-                    sizeNum > maxWidth && (maxWidth = sizeNum);
-                });
+                maxWidth = Math.max(maxWidth, Math.max(...largeSizes));
             }
         }
 
         const ratio = height / width;
 
         // Image's width shouldn't be larger than screen width
-        maxWidth >= screenWidth && (maxWidth = screenWidth);
+        maxWidth = Math.min(maxWidth, screenWidth);
         // And height too
         const maxHeight = maxWidth * ratio;
-        maxHeight >= screenHeight &&
-            (maxWidth = (maxWidth * screenHeight) / maxHeight);
+
+        if (maxHeight >= screenHeight)
+            maxWidth = (maxWidth * screenHeight) / maxHeight;
 
         imageClone.classList.add("zoom-img");
         imageClone.src = src;
