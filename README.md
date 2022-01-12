@@ -19,9 +19,9 @@ yarn add smooth-zoom
 Import with script tag
 
 ```html
-<script src="node_modules/smooth-zoom/dist/zoom.browser.js"></script>
+<script src="node_modules/smooth-zoom/dist/zoom.min.js"></script>
 <!-- or -->
-<script src="https://cdn.jsdelivr.net/npm/smooth-zoom@latest/dist/zoom.browser.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/smooth-zoom@latest/dist/zoom.min.js"></script>
 ```
 
 Import as module
