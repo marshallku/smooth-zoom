@@ -1,5 +1,11 @@
 # Smooth Zoom
 
+[![License](https://img.shields.io/npm/l/medium-zoom.svg)](https://www.npmjs.com/package/smooth-zoom)
+[![NPM Version](https://img.shields.io/npm/v/smooth-zoom.svg)](https://www.npmjs.com/package/smooth-zoom)
+[![Known Vulnerabilities](https://snyk.io/test/github/marshall-ku/smooth-zoom/badge.svg)](https://snyk.io/test/github/marshall-ku/smooth-zoom)
+[![NPM Downloads](https://img.shields.io/npm/dm/smooth-zoom.svg)](https://www.npmjs.com/package/smooth-zoom)
+[![Dependencies](https://img.shields.io/badge/dependencies-0-lightgrey.svg)](https://www.npmjs.com/package/smooth-zoom)
+
 A light weight javascript library for zooming images like Medium, Google Photos and more.
 
 ![Zoom example](https://blog.kakaocdn.net/dn/bGIJcB/btqXgnLZRC1/YSa09cEo2qD1ntYCvhCNWK/img.gif)
