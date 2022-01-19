@@ -27,6 +27,7 @@ export default function Zoom(target, options = {}) {
         const wrapY = -top + (screenHeight - height) / 2;
         const bg = document.createElement("div");
         const imageClone = document.createElement("img");
+        let maxWidth = image.naturalWidth;
 
         const removeImage = () => {
             bg.classList.remove("zoom-bg--reveal");
@@ -45,8 +46,6 @@ export default function Zoom(target, options = {}) {
             window.removeEventListener("scroll", removeImage);
             window.removeEventListener("resize", removeImage);
         };
-
-        let maxWidth = image.naturalWidth;
 
         imageClone.style.top = `${top + window.scrollY}px`;
         imageClone.style.left = `${left}px`;
@@ -71,12 +70,10 @@ export default function Zoom(target, options = {}) {
 
             if (sizes) {
                 // Find image's largest width in 'srcset' attribute
-                const largeSizes = sizes
+                maxWidth = sizes
                     .map((x) => +x.trim().replace("w", ""))
                     .filter((x) => !isNaN(x))
-                    .filter((x) => x > maxWidth);
-
-                maxWidth = Math.max(maxWidth, Math.max(...largeSizes));
+                    .reduce((acc, cur) => Math.max(acc, cur), 0);
             }
         }
 
@@ -87,8 +84,9 @@ export default function Zoom(target, options = {}) {
         // And height too
         const maxHeight = maxWidth * ratio;
 
-        if (maxHeight >= screenHeight)
+        if (maxHeight >= screenHeight) {
             maxWidth = (maxWidth * screenHeight) / maxHeight;
+        }
 
         imageClone.classList.add("zoom-img");
         imageClone.src = src;
