@@ -95,8 +95,14 @@ export default function Zoom(target, options = {}) {
 
         bg.addEventListener("click", removeImage, { once: true });
         imageClone.addEventListener("click", removeImage, { once: true });
-        window.addEventListener("scroll", removeImage, { once: true });
-        window.addEventListener("resize", removeImage, { once: true });
+        window.addEventListener("scroll", removeImage, {
+            once: true,
+            passive: true,
+        });
+        window.addEventListener("resize", removeImage, {
+            once: true,
+            passive: true,
+        });
 
         document.body.append(bg);
         document.body.append(imageClone);
@@ -112,10 +118,14 @@ export default function Zoom(target, options = {}) {
         imageClone.style.transform = `matrix(${scale}, 0, 0, ${scale}, ${wrapX}, ${wrapY})`;
         bg.classList.add("zoom-bg--reveal");
 
-        imageClone.addEventListener("transitionend", () => {
-            // replace image's source to original source
-            imageClone.src = originalizer(src);
-        });
+        imageClone.addEventListener(
+            "transitionend",
+            () => {
+                // replace image's source to original source
+                imageClone.src = originalizer(src);
+            },
+            { once: true }
+        );
     };
 
     const handleClick = (event) => {
