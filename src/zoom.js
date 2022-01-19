@@ -47,11 +47,6 @@ export default function Zoom(target, options = {}) {
             window.removeEventListener("resize", removeImage);
         };
 
-        imageClone.style.top = `${top + window.scrollY}px`;
-        imageClone.style.left = `${left}px`;
-        imageClone.style.width = `${width}px`;
-        imageClone.style.height = `${height}px`;
-
         bg.classList.add("zoom-bg");
 
         if (background) {
@@ -104,15 +99,18 @@ export default function Zoom(target, options = {}) {
             passive: true,
         });
 
-        document.body.append(bg);
-        document.body.append(imageClone);
+        document.body.append(bg, imageClone);
 
-        // Just for causing style recalculation
-        imageClone.offsetWidth;
+        // Added here for causing style recalculation
+        imageClone.style.top = `${top + window.scrollY}px`;
+        imageClone.style.left = `${left}px`;
+        imageClone.style.width = `${width}px`;
+        imageClone.style.height = `${height}px`;
 
-        // hide original image
+        // Hide original image
         image.classList.add("zoom-original--hidden");
-        // reveal and center cloned image, scale up if needed
+
+        // Reveal and center cloned image, scale up if needed
         const scale = maxWidth !== width ? maxWidth / width : 1;
 
         imageClone.style.transform = `matrix(${scale}, 0, 0, ${scale}, ${wrapX}, ${wrapY})`;
@@ -121,7 +119,7 @@ export default function Zoom(target, options = {}) {
         imageClone.addEventListener(
             "transitionend",
             () => {
-                // replace image's source to original source
+                // Replace image's source to original source
                 imageClone.src = originalizer(src);
             },
             { once: true }
