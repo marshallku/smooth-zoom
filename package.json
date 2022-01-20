@@ -7,7 +7,8 @@
     "types": "dist/zoom.d.js",
     "scripts": {
         "build": "rollup --config",
-        "postbuild": "cp ./src/zoom.d.ts ./dist"
+        "postbuild": "cp ./src/zoom.d.ts ./dist",
+        "prepublish": "npm run build"
     },
     "repository": {
         "type": "git",
