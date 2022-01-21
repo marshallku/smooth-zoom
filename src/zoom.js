@@ -130,6 +130,12 @@ export default function Zoom(target, options = {}) {
         zoom(event.target);
     };
 
+    /*
+     *
+     *  Source of the code below
+     *  https://stackoverflow.com/a/2541680
+     *
+     */
     const getAverageRGB = (img) => {
         const blockSize = 5;
         const rgb = { r: 0, g: 0, b: 0 };
