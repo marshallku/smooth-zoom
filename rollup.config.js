@@ -1,4 +1,5 @@
 import { babel } from "@rollup/plugin-babel";
+import typescript from "@rollup/plugin-typescript";
 import { terser } from "rollup-plugin-terser";
 import postcss from "rollup-plugin-postcss";
 import cssnano from "cssnano";
@@ -13,28 +14,20 @@ const basePlugins = [
         babelHelpers: "bundled",
         plugins: ["transform-object-rest-spread"],
     }),
+    typescript(),
 ];
 
 export default [
     {
-        input: "src/index.js",
+        input: "src/index.ts",
         output: {
             file: pkg.module,
             format: "es",
         },
         plugins: [...basePlugins],
     },
-    // {
-    //     input: "src/index.js",
-    //     output: {
-    //         name: "Zoom",
-    //         file: pkg.main.replace(".min", ".browser"),
-    //         format: "umd",
-    //     },
-    //     plugins: [...basePlugins, terser()],
-    // },
     {
-        input: "src/index.js",
+        input: "src/index.ts",
         output: {
             name: "Zoom",
             file: pkg.main.replace(".min", ""),
@@ -43,7 +36,7 @@ export default [
         plugins: [...basePlugins],
     },
     {
-        input: "src/index.js",
+        input: "src/index.ts",
         output: {
             name: "Zoom",
             file: pkg.main,

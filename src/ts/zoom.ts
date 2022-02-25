@@ -1,4 +1,10 @@
-export default function Zoom(target, options = {}) {
+export default function Zoom(
+    target: TAllowedTargets,
+    options: {
+        originalizer?: (src: string) => string;
+        background?: string;
+    } = {}
+) {
     const originalizer = options.originalizer || ((src) => src);
     const screenSize = {
         screenWidth: 0,
@@ -18,7 +24,7 @@ export default function Zoom(target, options = {}) {
             screenSize.screenWidth - documentElement.offsetWidth;
     };
 
-    const zoom = (image) => {
+    const zoom = (image: HTMLImageElement) => {
         const src = image.currentSrc || image.src;
         const { srcset } = image;
         const { screenWidth, screenHeight, scrollBar } = screenSize;
@@ -126,8 +132,8 @@ export default function Zoom(target, options = {}) {
         );
     };
 
-    const handleClick = (event) => {
-        zoom(event.target);
+    const handleClick = (event: MouseEvent) => {
+        zoom(event.target as HTMLImageElement);
     };
 
     /*
@@ -136,7 +142,7 @@ export default function Zoom(target, options = {}) {
      *  https://stackoverflow.com/a/2541680
      *
      */
-    const getAverageRGB = (img) => {
+    const getAverageRGB = (img: HTMLImageElement) => {
         const blockSize = 5;
         const rgb = { r: 0, g: 0, b: 0 };
         const canvas = document.createElement("canvas");
@@ -175,7 +181,7 @@ export default function Zoom(target, options = {}) {
         return rgb;
     };
 
-    const attach = (target) => {
+    const attach = (target: TAllowedTargets) => {
         if (!target) return;
 
         if (typeof target === "string") {
@@ -199,7 +205,7 @@ export default function Zoom(target, options = {}) {
         }
     };
 
-    const addZoomEvent = (element) => {
+    const addZoomEvent = (element: HTMLElement | Node) => {
         if (!(element instanceof HTMLElement)) return;
         if (element.tagName === "IMG") {
             element.addEventListener("click", handleClick);
