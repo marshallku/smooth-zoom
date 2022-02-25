@@ -6,42 +6,40 @@
  */
 
 export default function getAverageRGB(img: HTMLImageElement) {
-    const blockSize = 5;
+    const blockSize = 20;
     const rgb = { r: 0, g: 0, b: 0 };
     const canvas = document.createElement("canvas");
     const ctx = canvas.getContext("2d");
     if (!ctx) {
         return rgb;
     }
-    const width = (canvas.width =
-        img.naturalWidth || img.offsetWidth || img.width);
-    const height = (canvas.height =
-        img.naturalHeight || img.offsetHeight || img.height);
+    const width = img.naturalWidth || img.offsetWidth || img.width;
+    const height = img.naturalHeight || img.offsetHeight || img.height;
 
-    let data;
-    let i = -4;
-    let length;
-    let count = 0;
-
-    ctx.drawImage(img, 0, 0);
+    canvas.width = width;
+    canvas.height = height;
 
     try {
-        data = ctx.getImageData(0, 0, width, height);
-    } catch (e) {
+        ctx.drawImage(img, 0, 0);
+
+        const imageData = ctx.getImageData(0, 0, width, height);
+
+        const { data } = imageData;
+        const { length } = data;
+        const count = length / blockSize;
+
+        for (let i = 0; i < length; i += blockSize) {
+            rgb.r += data[i];
+            rgb.g += data[i + 1];
+            rgb.b += data[i + 2];
+        }
+
+        rgb.r = Math.floor(rgb.r / count);
+        rgb.g = Math.floor(rgb.g / count);
+        rgb.b = Math.floor(rgb.b / count);
+    } catch {
         return rgb;
     }
-
-    length = data.data.length;
-    while ((i += blockSize * 4) < length) {
-        ++count;
-        rgb.r += data.data[i];
-        rgb.g += data.data[i + 1];
-        rgb.b += data.data[i + 2];
-    }
-
-    rgb.r = Math.floor(rgb.r / count);
-    rgb.g = Math.floor(rgb.g / count);
-    rgb.b = Math.floor(rgb.b / count);
 
     return rgb;
 }
