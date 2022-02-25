@@ -7,30 +7,34 @@ export default function Zoom(
     const screenSize = {
         screenWidth: 0,
         screenHeight: 0,
-        scrollBar: 0,
     };
 
     const updateScreenSize = () => {
         const { documentElement } = document;
 
-        screenSize.screenWidth =
-            window.innerWidth || documentElement.clientWidth;
-        screenSize.screenHeight =
-            window.innerHeight || documentElement.clientHeight;
-        screenSize.scrollBar =
-            screenSize.screenWidth - documentElement.offsetWidth;
+        screenSize.screenWidth = documentElement.offsetWidth;
+        screenSize.screenHeight = documentElement.clientHeight;
     };
 
     const zoom = (image: HTMLImageElement) => {
         const src = image.currentSrc || image.src;
-        const { srcset } = image;
-        const { screenWidth, screenHeight, scrollBar } = screenSize;
+        const { srcset, naturalWidth } = image;
+        const { screenWidth, screenHeight } = screenSize;
         const { width, height, left, top } = image.getBoundingClientRect();
-        const wrapX = (screenWidth - scrollBar) / 2 - left - width / 2;
+        const wrapX = screenWidth / 2 - left - width / 2;
         const wrapY = -top + (screenHeight - height) / 2;
+        const maxScale = Math.min(screenWidth / width, screenHeight / height);
+        const sizes = srcset.match(/ ([0-9]+)w/gm);
+        const maxWidth = sizes
+            ? sizes
+                  .map((x) => +x.trim().replace("w", ""))
+                  .filter((x) => !Number.isNaN(x) || x <= naturalWidth)
+                  .reduce((acc, cur) => Math.max(acc, cur), 0)
+            : naturalWidth;
+        const imageScale = maxWidth / width;
+        const scale = Math.min(maxScale, imageScale);
         const bg = document.createElement("div");
         const imageClone = document.createElement("img");
-        let maxWidth = image.naturalWidth;
 
         const removeImage = () => {
             bg.classList.remove("zoom-bg--reveal");
@@ -55,35 +59,13 @@ export default function Zoom(
         if (background) {
             if (background === "auto") {
                 const average = getAverageRGB(image);
+
                 bg.style.background = average
                     ? `rgb(${average.r}, ${average.g}, ${average.b})`
                     : "rgb(0, 0, 0)";
             } else {
                 bg.style.background = background;
             }
-        }
-
-        if (srcset) {
-            const sizes = srcset.match(/ ([0-9]+)w/gm);
-
-            if (sizes) {
-                // Find image's largest width in 'srcset' attribute
-                maxWidth = sizes
-                    .map((x) => +x.trim().replace("w", ""))
-                    .filter((x) => !Number.isNaN(x))
-                    .reduce((acc, cur) => Math.max(acc, cur), 0);
-            }
-        }
-
-        const ratio = height / width;
-
-        // Image's width shouldn't be larger than screen width
-        maxWidth = Math.min(maxWidth, screenWidth);
-        // And height too
-        const maxHeight = maxWidth * ratio;
-
-        if (maxHeight >= screenHeight) {
-            maxWidth = (maxWidth * screenHeight) / maxHeight;
         }
 
         imageClone.classList.add("zoom-img");
@@ -109,14 +91,11 @@ export default function Zoom(
         imageClone.style.left = `${left}px`;
         imageClone.style.width = `${width}px`;
         imageClone.style.height = `${height}px`;
+        imageClone.style.transform = `matrix(${scale}, 0, 0, ${scale}, ${wrapX}, ${wrapY})`;
 
         // Hide original image
         image.classList.add("zoom-original--hidden");
 
-        // Reveal and center cloned image, scale up if needed
-        const scale = maxWidth !== width ? maxWidth / width : 1;
-
-        imageClone.style.transform = `matrix(${scale}, 0, 0, ${scale}, ${wrapX}, ${wrapY})`;
         bg.classList.add("zoom-bg--reveal");
 
         imageClone.addEventListener(
