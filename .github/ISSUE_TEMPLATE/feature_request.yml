@@ -1,0 +1,28 @@
+name: Feature Request
+description: Request any features that you want
+title: "[Request] "
+labels: ["enhancement"]
+body:
+    - type: markdown
+      attributes:
+          value: |
+              Thanks for taking the time to fill out this bug report!
+    - type: textarea
+      id: problem
+      attributes:
+          label: Problem
+          description: Please explain clearly and concisely what the problem is.
+      validations:
+          required: true
+    - type: textarea
+      id: solution
+      attributes:
+          label: Solution
+          description: Tell me about the desired result.
+      validations:
+          required: true
+    - type: textarea
+      id: etc
+      attributes:
+          label: Further suggestions
+          description: Fill out if you have any further suggestions.
