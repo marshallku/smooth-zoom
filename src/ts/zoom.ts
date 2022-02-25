@@ -2,17 +2,13 @@ import getAverageRGB from "./utils/getAverageRGB";
 
 export default function Zoom(
     target: TAllowedTargets,
-    options: {
-        background?: string;
-        onTransitionEnd?: (img: HTMLImageElement) => void;
-    } = {}
+    { background, onTransitionEnd }: IZoomOptions
 ) {
     const screenSize = {
         screenWidth: 0,
         screenHeight: 0,
         scrollBar: 0,
     };
-    const { background, onTransitionEnd } = options;
 
     const updateScreenSize = () => {
         const { documentElement } = document;
