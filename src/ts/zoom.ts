@@ -58,11 +58,9 @@ export default function Zoom(
 
         if (background) {
             if (background === "auto") {
-                const average = getAverageRGB(image);
+                const { r, g, b } = getAverageRGB(image);
 
-                bg.style.background = average
-                    ? `rgb(${average.r}, ${average.g}, ${average.b})`
-                    : "rgb(0, 0, 0)";
+                bg.style.background = `rgb(${r}, ${g}, ${b})`;
             } else {
                 bg.style.background = background;
             }
