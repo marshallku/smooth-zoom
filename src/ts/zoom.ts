@@ -133,18 +133,14 @@ export default function Zoom(
     };
 
     const attach = (target: TAllowedTargets) => {
-        if (!target) return;
+        if (!target) {
+            return;
+        }
 
         if (typeof target === "string") {
             document.querySelectorAll(target).forEach(addZoomEvent);
-        } else if (target instanceof HTMLElement) {
-            addZoomEvent(target);
-        } else if (target instanceof NodeList || target instanceof Array) {
-            target.forEach(addZoomEvent);
-        }
 
-        // Add cursor style for target
-        if (typeof target === "string") {
+            // Add cursor style for target
             const style = document.createElement("style");
             const head =
                 document.head || document.getElementsByTagName("head")[0];
@@ -153,19 +149,29 @@ export default function Zoom(
                 document.createTextNode(`${target}{cursor:zoom-in}`)
             );
             head.appendChild(style);
+
+            return;
         }
+
+        if (target instanceof HTMLElement) {
+            addZoomEvent(target);
+            return;
+        }
+
+        target.forEach(addZoomEvent);
     };
 
     const addZoomEvent = (element: HTMLElement | Node) => {
-        if (!(element instanceof HTMLElement)) return;
+        if (!(element instanceof HTMLElement)) {
+            return;
+        }
+
         if (element.tagName === "IMG") {
             element.addEventListener("click", handleClick);
-        } else {
-            const childImg = element.querySelector("img");
-            if (childImg) {
-                childImg.addEventListener("click", handleClick);
-            }
+            return;
         }
+
+        element.querySelector("img")?.addEventListener("click", handleClick);
     };
 
     updateScreenSize();
