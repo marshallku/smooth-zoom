@@ -1,4 +1,4 @@
-import getAverageRGB from "./utils/getAverageRGB";
+import { getAverageRGB } from "./utils/getAverageRGB";
 
 export default function Zoom(
     target: TAllowedTargets,
@@ -75,7 +75,7 @@ export default function Zoom(
                 // Find image's largest width in 'srcset' attribute
                 maxWidth = sizes
                     .map((x) => +x.trim().replace("w", ""))
-                    .filter((x) => !isNaN(x))
+                    .filter((x) => !Number.isNaN(x))
                     .reduce((acc, cur) => Math.max(acc, cur), 0);
             }
         }
