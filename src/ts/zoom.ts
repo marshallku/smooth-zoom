@@ -120,8 +120,7 @@ export default function Zoom(
 
             // Add cursor style for target
             const style = document.createElement("style");
-            const head =
-                document.head || document.getElementsByTagName("head")[0];
+            const { head } = document;
 
             style.appendChild(
                 document.createTextNode(`${target}{cursor:zoom-in}`)
