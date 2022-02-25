@@ -26,10 +26,11 @@ export default function Zoom(
         const maxScale = Math.min(screenWidth / width, screenHeight / height);
         const sizes = srcset.match(/ ([0-9]+)w/gm);
         const maxWidth = sizes
-            ? sizes
-                  .map((x) => +x.trim().replace("w", ""))
-                  .filter((x) => !Number.isNaN(x) || x <= naturalWidth)
-                  .reduce((acc, cur) => Math.max(acc, cur), 0)
+            ? Math.max(
+                  ...sizes
+                      .map((x) => +x.trim().replace("w", ""))
+                      .filter((x) => !Number.isNaN(x) || x <= naturalWidth)
+              )
             : naturalWidth;
         const imageScale = maxWidth / width;
         const scale = Math.min(maxScale, imageScale);
