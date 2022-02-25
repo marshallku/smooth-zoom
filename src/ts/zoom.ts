@@ -1,19 +1,18 @@
-import { getAverageRGB } from "./utils/getAverageRGB";
+import getAverageRGB from "./utils/getAverageRGB";
 
 export default function Zoom(
     target: TAllowedTargets,
     options: {
-        originalizer?: (src: string) => string;
         background?: string;
+        onTransitionEnd?: (img: HTMLImageElement) => void;
     } = {}
 ) {
-    const originalizer = options.originalizer || ((src) => src);
     const screenSize = {
         screenWidth: 0,
         screenHeight: 0,
         scrollBar: 0,
     };
-    const background = options.background;
+    const { background, onTransitionEnd } = options;
 
     const updateScreenSize = () => {
         const { documentElement } = document;
@@ -127,8 +126,7 @@ export default function Zoom(
         imageClone.addEventListener(
             "transitionend",
             () => {
-                // Replace image's source to original source
-                imageClone.src = originalizer(src);
+                onTransitionEnd?.(imageClone);
             },
             { once: true }
         );

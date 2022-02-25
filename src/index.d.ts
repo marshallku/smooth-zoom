@@ -1,8 +1,8 @@
 export default function Zoom(
     selector?: string | HTMLElement | NodeList | HTMLElement[],
     options?: {
-        originalizer?: (src: string) => string;
         background?: string;
+        onTransitionEnd?: (img: HTMLImageElement) => void;
     }
 ): {
     zoom: (img: HTMLImageElement) => void;
