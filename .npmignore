@@ -4,11 +4,10 @@
 .git
 .gitignore
 .hg
-.npmignore
-.npmrc
-.lock-wscript
-.svn
-.wafpickle-*
-config.gypi
-CVS
+.github
+
 npm-debug.log
+
+src
+tsconfig.json
+rollup.config.json
