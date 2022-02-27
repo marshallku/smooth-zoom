@@ -16,13 +16,13 @@
     left: 0;
     width: 100vw;
     height: 100vh;
-    background: #000000;
+    background-color: rgba(0, 0, 0, 0.95);
     opacity: 0;
     transition: opacity 0.3s ease-in-out;
 }
 
 .zoom-bg.zoom-bg--reveal {
-    opacity: 0.95;
+    opacity: 1;
 }
 
 .zoom-original--hidden {
