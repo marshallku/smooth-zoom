@@ -13,14 +13,13 @@ export default function Zoom(
         const wrapX = screenWidth / 2 - left - width / 2;
         const wrapY = -top + (screenHeight - height) / 2;
         const maxScale = Math.min(screenWidth / width, screenHeight / height);
-        const sizes = srcset.match(/ ([0-9]+)w/gm);
-        const maxWidth = sizes
-            ? Math.max(
-                  ...sizes
-                      .map((x) => +x.trim().replace("w", ""))
-                      .filter((x) => !Number.isNaN(x) && naturalWidth < x)
-              )
-            : naturalWidth;
+        const sizes = srcset.match(/ ([0-9]+)w/gm) || [];
+        const maxWidth = Math.max(
+            naturalWidth,
+            ...sizes
+                .map((x) => +x.trim().replace("w", ""))
+                .filter((x) => !Number.isNaN(x) && naturalWidth < x)
+        );
         const imageScale = maxWidth / width;
         const scale = Math.min(maxScale, imageScale);
         const bg = document.createElement("div");
