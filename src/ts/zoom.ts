@@ -4,22 +4,11 @@ export default function Zoom(
     target?: TAllowedTargets,
     { background, onTransitionEnd }: IZoomOptions = {}
 ) {
-    const screenSize = {
-        screenWidth: 0,
-        screenHeight: 0,
-    };
-
-    const updateScreenSize = () => {
-        const { documentElement } = document;
-
-        screenSize.screenWidth = documentElement.offsetWidth;
-        screenSize.screenHeight = documentElement.clientHeight;
-    };
-
     const zoom = (image: HTMLImageElement) => {
         const src = image.currentSrc || image.src;
         const { srcset, naturalWidth } = image;
-        const { screenWidth, screenHeight } = screenSize;
+        const { offsetWidth: screenWidth, clientHeight: screenHeight } =
+            document.documentElement;
         const { width, height, left, top } = image.getBoundingClientRect();
         const wrapX = screenWidth / 2 - left - width / 2;
         const wrapY = -top + (screenHeight - height) / 2;
@@ -152,9 +141,6 @@ export default function Zoom(
 
         element.querySelector("img")?.addEventListener("click", handleClick);
     };
-
-    updateScreenSize();
-    window.addEventListener("resize", updateScreenSize, { passive: true });
 
     target && attach(target);
 
