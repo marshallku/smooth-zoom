@@ -29,7 +29,7 @@ export default function Zoom(
             ? Math.max(
                   ...sizes
                       .map((x) => +x.trim().replace("w", ""))
-                      .filter((x) => !Number.isNaN(x) || x <= naturalWidth)
+                      .filter((x) => !Number.isNaN(x) && naturalWidth < x)
               )
             : naturalWidth;
         const imageScale = maxWidth / width;
