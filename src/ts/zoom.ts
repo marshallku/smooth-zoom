@@ -83,19 +83,10 @@ export default function Zoom(
             passive: true,
         });
 
-        document.body.append(bg, imageClone);
-
-        // Added here for causing style recalculation
         imageClone.style.top = `${top + window.scrollY}px`;
         imageClone.style.left = `${left}px`;
         imageClone.style.width = `${width}px`;
         imageClone.style.height = `${height}px`;
-        imageClone.style.transform = `matrix(${scale}, 0, 0, ${scale}, ${wrapX}, ${wrapY})`;
-
-        // Hide original image
-        image.classList.add("zoom-original--hidden");
-
-        bg.classList.add("zoom-bg--reveal");
 
         imageClone.addEventListener(
             "transitionend",
@@ -104,6 +95,17 @@ export default function Zoom(
             },
             { once: true }
         );
+
+        document.body.append(bg, imageClone);
+
+        // Hide original image
+        image.classList.add("zoom-original--hidden");
+
+        // For transition
+        window.requestAnimationFrame(() => {
+            imageClone.style.transform = `matrix(${scale}, 0, 0, ${scale}, ${wrapX}, ${wrapY})`;
+            bg.classList.add("zoom-bg--reveal");
+        });
     };
 
     const handleClick = (event: MouseEvent) => {
