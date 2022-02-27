@@ -6,5 +6,6 @@ declare type TAllowedTargets =
 
 interface IZoomOptions {
     background?: string;
+    useMaximumSize?: boolean;
     onTransitionEnd?: (img: HTMLImageElement) => void;
 }

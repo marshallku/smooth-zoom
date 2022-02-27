@@ -2,7 +2,7 @@ import getAverageRGB from "./utils/getAverageRGB";
 
 export default function Zoom(
     target?: TAllowedTargets,
-    { background, onTransitionEnd }: IZoomOptions = {}
+    { background, useMaximumSize = true, onTransitionEnd }: IZoomOptions = {}
 ) {
     const zoom = (image: HTMLImageElement) => {
         const src = image.currentSrc || image.src;
@@ -14,12 +14,14 @@ export default function Zoom(
         const wrapY = -top + (screenHeight - height) / 2;
         const maxScale = Math.min(screenWidth / width, screenHeight / height);
         const sizes = srcset.match(/ ([0-9]+)w/gm) || [];
-        const maxWidth = Math.max(
-            naturalWidth,
-            ...sizes
-                .map((x) => +x.trim().replace("w", ""))
-                .filter((x) => !Number.isNaN(x) && naturalWidth < x)
-        );
+        const maxWidth = useMaximumSize
+            ? Math.max(
+                  naturalWidth,
+                  ...sizes
+                      .map((x) => +x.trim().replace("w", ""))
+                      .filter((x) => !Number.isNaN(x) && naturalWidth < x)
+              )
+            : naturalWidth;
         const imageScale = maxWidth / width;
         const scale = Math.min(maxScale, imageScale);
         const bg = document.createElement("div");

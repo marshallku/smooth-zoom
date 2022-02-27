@@ -58,17 +58,18 @@ Zoom(document.querySelectorAll(".zoomable"));
 
 ```javascript
 Zoom(".zoomable", {
+    background: "auto",
     onTransitionEnd: (img) => {
         img.src = img.src.replace(/-[0-9]+\.jpg/, ".jpg");
     },
-    background: "auto",
 });
 ```
 
-| Property        | Type                            | Default             | Description                                                               |
-| --------------- | ------------------------------- | ------------------- | ------------------------------------------------------------------------- |
-| onTransitionEnd | (img: HTMLImageElement) => void | undefined           | Update image or do something after zoom effect                            |
-| background      | string                          | rgba(0, 0, 0, 0.95) | Image's background color.<br>Use `auto` to get average color of the image |
+| Property        | Type                            | Default             | Description                                                                 |
+| --------------- | ------------------------------- | ------------------- | --------------------------------------------------------------------------- |
+| background      | string                          | rgba(0, 0, 0, 0.95) | Image's background color.<br>Use `auto` to get average color of the image   |
+| useMaximumSize  | boolean                         | true                | Find the longest width through image's natural width and `srcset` attribute |
+| onTransitionEnd | (img: HTMLImageElement) => void | undefined           | Update image or do something after zoom effect                              |
 
 ## Methods
 
