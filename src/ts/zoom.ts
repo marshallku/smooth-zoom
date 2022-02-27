@@ -1,8 +1,8 @@
 import getAverageRGB from "./utils/getAverageRGB";
 
 export default function Zoom(
-    target: TAllowedTargets,
-    { background, onTransitionEnd }: IZoomOptions
+    target?: TAllowedTargets,
+    { background, onTransitionEnd }: IZoomOptions = {}
 ) {
     const screenSize = {
         screenWidth: 0,
@@ -156,7 +156,7 @@ export default function Zoom(
     updateScreenSize();
     window.addEventListener("resize", updateScreenSize, { passive: true });
 
-    attach(target);
+    target && attach(target);
 
     return {
         zoom,

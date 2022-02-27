@@ -1,10 +1,12 @@
 export default function Zoom(
-    selector?: string | HTMLElement | NodeList | HTMLElement[],
+    selector?: string | HTMLElement | NodeList | Array<HTMLElement>,
     options?: {
         background?: string;
         onTransitionEnd?: (img: HTMLImageElement) => void;
     }
 ): {
     zoom: (img: HTMLImageElement) => void;
-    attach: (target: string | HTMLElement | NodeList | HTMLElement[]) => void;
+    attach: (
+        target: string | HTMLElement | NodeList | Array<HTMLElement>
+    ) => void;
 };

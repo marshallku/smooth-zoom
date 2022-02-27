@@ -65,10 +65,10 @@ Zoom(".zoomable", {
 });
 ```
 
-| Property        | Type                            | Default      | Description                                                               |
-| --------------- | ------------------------------- | ------------ | ------------------------------------------------------------------------- |
-| onTransitionEnd | (img: HTMLImageElement) => void |              | Update image or do something after zoom effect                            |
-| background      | string                          | rgb(0, 0, 0) | Image's background color.<br>Use "auto" to get average color of the image |
+| Property        | Type                            | Default   | Description                                                               |
+| --------------- | ------------------------------- | --------- | ------------------------------------------------------------------------- |
+| onTransitionEnd | (img: HTMLImageElement) => void | undefined | Update image or do something after zoom effect                            |
+| background      | string                          | #000000   | Image's background color.<br>Use "auto" to get average color of the image |
 
 ## Methods
 

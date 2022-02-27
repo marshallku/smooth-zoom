@@ -1,4 +1,8 @@
-declare type TAllowedTargets = string | HTMLElement | NodeList | HTMLElement[];
+declare type TAllowedTargets =
+    | string
+    | HTMLElement
+    | NodeList
+    | Array<HTMLElement>;
 
 interface IZoomOptions {
     background?: string;
