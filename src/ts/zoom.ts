@@ -61,9 +61,20 @@ export default function Zoom(
         imageClone.src = src;
         imageClone.width = width;
         imageClone.height = height;
+        imageClone.style.top = `${top + window.scrollY}px`;
+        imageClone.style.left = `${left}px`;
+        imageClone.style.width = `${width}px`;
+        imageClone.style.height = `${height}px`;
 
         bg.addEventListener("click", removeImage, { once: true });
         imageClone.addEventListener("click", removeImage, { once: true });
+        imageClone.addEventListener(
+            "transitionend",
+            () => {
+                onTransitionEnd?.(imageClone);
+            },
+            { once: true }
+        );
         window.addEventListener("scroll", removeImage, {
             once: true,
             passive: true,
@@ -72,19 +83,6 @@ export default function Zoom(
             once: true,
             passive: true,
         });
-
-        imageClone.style.top = `${top + window.scrollY}px`;
-        imageClone.style.left = `${left}px`;
-        imageClone.style.width = `${width}px`;
-        imageClone.style.height = `${height}px`;
-
-        imageClone.addEventListener(
-            "transitionend",
-            () => {
-                onTransitionEnd?.(imageClone);
-            },
-            { once: true }
-        );
 
         document.body.append(bg, imageClone);
 
@@ -143,7 +141,9 @@ export default function Zoom(
         element.querySelector("img")?.addEventListener("click", handleClick);
     };
 
-    target && attach(target);
+    if (target) {
+        attach(target);
+    }
 
     return {
         zoom,
