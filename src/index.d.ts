@@ -3,6 +3,7 @@ export default function Zoom(
     options?: {
         background?: string;
         useMaximumSize?: boolean;
+        onClick?: (img: HTMLImageElement) => void;
         onTransitionEnd?: (img: HTMLImageElement) => void;
     }
 ): {

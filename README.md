@@ -65,11 +65,12 @@ Zoom(".zoomable", {
 });
 ```
 
-| Property        | Type                            | Default             | Description                                                                 |
-| --------------- | ------------------------------- | ------------------- | --------------------------------------------------------------------------- |
-| background      | string                          | rgba(0, 0, 0, 0.95) | Image's background color.<br>Use `auto` to get average color of the image   |
-| useMaximumSize  | boolean                         | true                | Find the longest width through image's natural width and `srcset` attribute |
-| onTransitionEnd | (img: HTMLImageElement) => void | undefined           | Update image or do something after zoom effect                              |
+| Property        | Type                            | Default             | Description                                                                          |
+| --------------- | ------------------------------- | ------------------- | ------------------------------------------------------------------------------------ |
+| background      | string                          | rgba(0, 0, 0, 0.95) | Image's background color.<br>Use `auto` to get average color of the image            |
+| useMaximumSize  | boolean                         | true                | Find the longest width through image's natural width and `srcset` attribute          |
+| onClick         | (img: HTMLImageElement) => void | undefined           | Function that fires on click. Note that img is **original** image element.           |
+| onTransitionEnd | (img: HTMLImageElement) => void | undefined           | Function that fires after zoom animation. Note that img is **cloned** image element. |
 
 ## Methods
 
