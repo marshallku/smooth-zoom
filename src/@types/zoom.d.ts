@@ -1,10 +1,10 @@
-declare type TAllowedTargets =
+declare type AllowedTarget =
     | string
     | HTMLElement
     | NodeList
     | Array<HTMLElement>;
 
-interface IZoomOptions {
+interface ZoomOption {
     background?: string;
     useMaximumSize?: boolean;
     onTransitionEnd?: (img: HTMLImageElement) => void;

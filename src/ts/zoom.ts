@@ -1,13 +1,13 @@
 import getAverageRGB from "./utils/getAverageRGB";
 
 export default function Zoom(
-    target?: TAllowedTargets,
+    target?: AllowedTarget,
     {
         background,
         useMaximumSize = true,
         onTransitionEnd,
         onClick,
-    }: IZoomOptions = {}
+    }: ZoomOption = {}
 ) {
     const zoom = (image: HTMLImageElement) => {
         const src = image.currentSrc || image.src;
@@ -106,7 +106,7 @@ export default function Zoom(
         zoom(event.target as HTMLImageElement);
     };
 
-    const attach = (target: TAllowedTargets) => {
+    const attach = (target: AllowedTarget) => {
         if (!target) {
             return;
         }
