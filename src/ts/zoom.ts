@@ -96,8 +96,10 @@ export default function Zoom(
 
         // For transition
         window.requestAnimationFrame(() => {
-            imageClone.style.transform = `matrix(${scale}, 0, 0, ${scale}, ${wrapX}, ${wrapY})`;
-            bg.classList.add("zoom-bg--reveal");
+            window.setTimeout(() => {
+                imageClone.style.transform = `matrix(${scale}, 0, 0, ${scale}, ${wrapX}, ${wrapY})`;
+                bg.classList.add("zoom-bg--reveal");
+            });
         });
     };
 
