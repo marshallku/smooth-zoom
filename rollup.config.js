@@ -3,6 +3,7 @@ import typescript from "@rollup/plugin-typescript";
 import { terser } from "rollup-plugin-terser";
 import postcss from "rollup-plugin-postcss";
 import cssnano from "cssnano";
+import dts from "rollup-plugin-dts";
 import pkg from "./package.json";
 
 const basePlugins = [
@@ -25,6 +26,14 @@ export default [
             format: "es",
         },
         plugins: [...basePlugins],
+    },
+    {
+        input: "src/index.ts",
+        output: {
+            name: "crtElt",
+            file: pkg.types,
+        },
+        plugins: [dts()],
     },
     {
         input: "src/index.ts",
