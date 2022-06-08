@@ -1,3 +1,4 @@
+import { AllowedTarget, ZoomOption } from "./types/zoom";
 import getAverageRGB from "./utils/getAverageRGB";
 
 export default function Zoom(
