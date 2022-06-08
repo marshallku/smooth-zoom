@@ -1,14 +1,11 @@
-export default function Zoom(
-    selector?: string | HTMLElement | NodeList | Array<HTMLElement>,
-    options?: {
-        background?: string;
-        useMaximumSize?: boolean;
-        onClick?: (img: HTMLImageElement) => void;
-        onTransitionEnd?: (img: HTMLImageElement) => void;
-    }
+import { AllowedTarget, ZoomOption } from "./types/zoom";
+
+declare function Zoom(
+    selector?: AllowedTarget,
+    options?: ZoomOption
 ): {
     zoom: (img: HTMLImageElement) => void;
-    attach: (
-        target: string | HTMLElement | NodeList | Array<HTMLElement>
-    ) => void;
+    attach: (target: AllowedTarget) => void;
 };
+
+export default Zoom;

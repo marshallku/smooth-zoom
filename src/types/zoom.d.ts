@@ -1,10 +1,10 @@
-declare type AllowedTarget =
+export type AllowedTarget =
     | string
     | HTMLElement
     | NodeList
     | Array<HTMLElement>;
 
-interface ZoomOption {
+export interface ZoomOption {
     background?: string;
     useMaximumSize?: boolean;
     onTransitionEnd?: (img: HTMLImageElement) => void;
