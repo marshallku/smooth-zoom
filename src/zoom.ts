@@ -109,6 +109,32 @@ export default function Zoom(
         zoom(event.target as HTMLImageElement);
     };
 
+    const addZoomEvent = (element: HTMLElement | Node) => {
+        if (!(element instanceof HTMLElement)) {
+            return;
+        }
+
+        if (element.tagName === "IMG") {
+            element.addEventListener("click", handleClick);
+            return;
+        }
+
+        element.querySelector("img")?.addEventListener("click", handleClick);
+    };
+
+    const removeZoomEvent = (element: HTMLElement | Node) => {
+        if (!(element instanceof HTMLElement)) {
+            return;
+        }
+
+        if (element.tagName === "IMG") {
+            element.removeEventListener("click", handleClick);
+            return;
+        }
+
+        element.querySelector("img")?.removeEventListener("click", handleClick);
+    };
+
     const attach = (target: AllowedTarget) => {
         if (!target) {
             return;
@@ -137,17 +163,22 @@ export default function Zoom(
         target.forEach(addZoomEvent);
     };
 
-    const addZoomEvent = (element: HTMLElement | Node) => {
-        if (!(element instanceof HTMLElement)) {
+    const detach = (target: AllowedTarget) => {
+        if (!target) {
             return;
         }
 
-        if (element.tagName === "IMG") {
-            element.addEventListener("click", handleClick);
+        if (typeof target === "string") {
+            document.querySelectorAll(target).forEach(removeZoomEvent);
             return;
         }
 
-        element.querySelector("img")?.addEventListener("click", handleClick);
+        if (target instanceof HTMLElement) {
+            removeZoomEvent(target);
+            return;
+        }
+
+        target.forEach(removeZoomEvent);
     };
 
     if (target) {
@@ -157,5 +188,6 @@ export default function Zoom(
     return {
         zoom,
         attach,
+        detach,
     };
 }
