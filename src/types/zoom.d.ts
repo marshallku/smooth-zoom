@@ -2,7 +2,9 @@ export type AllowedTarget =
     | string
     | HTMLElement
     | NodeList
-    | Array<HTMLElement>;
+    | Array<HTMLElement>
+    | null
+    | undefined;
 
 export interface ZoomOption {
     background?: string;
