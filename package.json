@@ -1,6 +1,6 @@
 {
     "name": "smooth-zoom",
-    "version": "1.3.0",
+    "version": "1.3.1",
     "description": "A light weight javascript library for zooming images.",
     "type": "module",
     "main": "dist/zoom.min.js",
