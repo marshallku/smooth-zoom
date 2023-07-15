@@ -14,9 +14,12 @@ A light weight javascript library for zooming images like Medium, Google Photos 
 
 ## Install
 
-```
-npm install smooth-zoom
-# or
+```bash
+# npm
+npm i smooth-zoom
+# pnpm
+pnpm i smooth-zoom
+# yarn
 yarn add smooth-zoom
 ```
 
@@ -89,7 +92,7 @@ Zoom(".zoomable", {
 
 ## Methods
 
-#### `zoom(img: HTMLImageElement) => void`
+### `zoom(img: HTMLImageElement) => void`
 
 Zoom-in an image
 
@@ -99,7 +102,7 @@ const zoom = Zoom();
 zoom.zoom(document.querySelector("img"));
 ```
 
-#### `attach(target: string | HTMLElement | NodeList | HTMLElement[]) => void`
+### `attach(target: string | HTMLElement | NodeList | HTMLElement[]) => void`
 
 Make the target zoomed on click
 
