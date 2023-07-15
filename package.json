@@ -7,7 +7,8 @@
     "types": "dist/zoom.d.ts",
     "scripts": {
         "build": "rollup --config",
-        "prepublish": "npm run build"
+        "prepublish": "npm run build",
+        "update-version": "bash scripts/update.sh"
     },
     "repository": {
         "type": "git",
