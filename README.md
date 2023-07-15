@@ -113,3 +113,11 @@ const zoom = Zoom(".zoomable", {
 
 zoom.attach(".more-elements");
 ```
+
+### `detach(target: string | HTMLElement | NodeList | HTMLElement[]) => void`
+
+Remove an event listener from the target
+
+```javascript
+zoom.detach(".more-elements");
+```
