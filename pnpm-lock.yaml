@@ -13,7 +13,7 @@ devDependencies:
     version: 0.4.3(rollup@3.26.2)
   '@rollup/plugin-typescript':
     specifier: ^11.1.2
-    version: 11.1.2(rollup@3.26.2)(typescript@5.1.6)
+    version: 11.1.2(rollup@3.26.2)(tslib@2.6.0)(typescript@5.1.6)
   '@types/node':
     specifier: ^20.4.2
     version: 20.4.2
@@ -32,6 +32,9 @@ devDependencies:
   rollup-plugin-postcss:
     specifier: ^4.0.2
     version: 4.0.2(postcss@8.4.26)
+  tslib:
+    specifier: ^2.6.0
+    version: 2.6.0
   typescript:
     specifier: ^5.1.6
     version: 5.1.6
@@ -314,7 +317,7 @@ packages:
       terser: 5.19.0
     dev: true
 
-  /@rollup/plugin-typescript@11.1.2(rollup@3.26.2)(typescript@5.1.6):
+  /@rollup/plugin-typescript@11.1.2(rollup@3.26.2)(tslib@2.6.0)(typescript@5.1.6):
     resolution: {integrity: sha512-0ghSOCMcA7fl1JM+0gYRf+Q/HWyg+zg7/gDSc+fRLmlJWcW5K1I+CLRzaRhXf4Y3DRyPnnDo4M2ktw+a6JcDEg==}
     engines: {node: '>=14.0.0'}
     peerDependencies:
@@ -330,6 +333,7 @@ packages:
       '@rollup/pluginutils': 5.0.2(rollup@3.26.2)
       resolve: 1.22.2
       rollup: 3.26.2
+      tslib: 2.6.0
       typescript: 5.1.6
     dev: true
 
@@ -1869,6 +1873,10 @@ packages:
   /to-fast-properties@2.0.0:
     resolution: {integrity: sha512-/OaKK0xYrs3DmxRYqL/yDc+FxFUVYhDlXMhRmv3z915w2HF1tnN1omB354j8VUGO/hbRzyD6Y3sA7v7GS/ceog==}
     engines: {node: '>=4'}
+    dev: true
+
+  /tslib@2.6.0:
+    resolution: {integrity: sha512-7At1WUettjcSRHXCyYtTselblcHl9PJFFVKiCAy/bY97+BPZXSQ2wbq0P9s8tK2G7dFQfNnlJnPAiArVBVBsfA==}
     dev: true
 
   /typescript@5.1.6:
