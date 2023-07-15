@@ -32,13 +32,13 @@ Import with script tag
 
 Import as module
 
-```javascript
+```ts
 import Zoom from "smooth-zoom";
 ```
 
 And calling it with any css-selector, HTMLElement (or Array of it), and NodeList will make your image zoomed on click.
 
-```javascript
+```ts
 // Css Selector
 Zoom(".zoomable");
 
@@ -52,6 +52,21 @@ Zoom([
 
 // NodeList
 Zoom(document.querySelectorAll(".zoomable"));
+```
+
+And you can simply use this with `useRef` in react.
+
+```ts
+import { useRef } from "react";
+import Zoom from "smooth-zoom";
+
+function App() {
+    const zoom = useRef(Zoom());
+
+    return <img src="https://example.com/" ref={zoom.current.attach} />;
+}
+
+export default App;
 ```
 
 ## Options
