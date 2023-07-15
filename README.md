@@ -57,20 +57,49 @@ Zoom([
 Zoom(document.querySelectorAll(".zoomable"));
 ```
 
-And you can simply use this with `useRef` in react.
+And you can simply use this with custom hook in react.
 
 ```ts
 import { useRef } from "react";
 import Zoom from "smooth-zoom";
 
-function App() {
+export default function useZoom() {
     const zoom = useRef(Zoom());
 
-    return <img src="https://example.com/" ref={zoom.current.attach} />;
+    return {
+        attach: zoom.current.attach,
+        detach: zoom.current.detach,
+    };
 }
-
-export default App;
 ```
+
+Add custom hook like above,
+
+```tsx
+import { ImgHTMLAttributes, useEffect, useRef } from "react";
+import { useZoom } from "@hooks";
+
+export default function ZoomableImage(
+    props: ImgHTMLAttributes<HTMLImageElement>
+) {
+    const { attach, detach } = useZoom();
+    const imageRef = useRef<HTMLImageElement | null>(null);
+
+    useEffect(() => {
+        const { current: image } = imageRef;
+
+        attach(image);
+
+        return () => {
+            detach(image);
+        };
+    }, []);
+
+    return <img {...props} ref={imageRef} />;
+}
+```
+
+And create a component like above.
 
 ## Options
 
