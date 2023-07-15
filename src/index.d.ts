@@ -6,6 +6,7 @@ declare function Zoom(
 ): {
     zoom: (img: HTMLImageElement) => void;
     attach: (target: AllowedTarget) => void;
+    detach: (target: AllowedTarget) => void;
 };
 
 export default Zoom;
