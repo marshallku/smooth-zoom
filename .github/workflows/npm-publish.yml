@@ -10,8 +10,8 @@ jobs:
     publish-npm:
         runs-on: ubuntu-latest
         steps:
-            - uses: actions/checkout@v3
-            - uses: actions/setup-node@v3
+            - uses: actions/checkout@v4
+            - uses: actions/setup-node@v4
               with:
                   node-version: 18
                   check-latest: true
@@ -25,7 +25,7 @@ jobs:
               id: pnpm-cache
               shell: bash
               run: echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
-            - uses: actions/cache@v3
+            - uses: actions/cache@v4
               name: Setup pnpm cache
               with:
                   path: ${{ steps.pnpm-cache.outputs.STORE_PATH }}
