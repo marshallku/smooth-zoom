@@ -21,3 +21,15 @@ jobs:
             - uses: marshallku/actions/setup/pnpm@master
             - name: Build
               run: pnpm build
+    sonarqube:
+        name: Analyze with SonarQube
+        runs-on: ubuntu-latest
+        if: github.ref == 'refs/heads/master'
+        steps:
+            - uses: actions/checkout@v4
+              with:
+                  fetch-depth: 0
+            - uses: sonarsource/sonarqube-scan-action@v2
+              env:
+                  SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+                  SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
