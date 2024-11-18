@@ -4,7 +4,10 @@ import terser from "@rollup/plugin-terser";
 import postcss from "rollup-plugin-postcss";
 import cssnano from "cssnano";
 import dts from "rollup-plugin-dts";
-import pkg from "./package.json" assert { type: "json" };
+
+const { default: pkg } = await import("./package.json", {
+    with: { type: "json" },
+});
 
 const basePlugins = [
     postcss({
