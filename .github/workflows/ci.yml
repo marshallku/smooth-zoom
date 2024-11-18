@@ -1,0 +1,23 @@
+name: CI
+
+on:
+    push:
+
+env:
+    CI: true
+
+jobs:
+    check-spelling:
+        name: Check spelling
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v4
+            - uses: marshallku/actions/analyze/spell@master
+    build:
+        name: Build
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v4
+            - uses: marshallku/actions/setup/pnpm@master
+            - name: Build
+              run: pnpm build
