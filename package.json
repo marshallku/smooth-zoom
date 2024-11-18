@@ -32,7 +32,9 @@
         "url": "https://github.com/marshallku/smooth-zoom/issues"
     },
     "homepage": "https://github.com/marshallku/smooth-zoom#readme",
+    "prettier": "@marshallku/prettier-config",
     "devDependencies": {
+        "@marshallku/prettier-config": "^0.0.1",
         "@rollup/plugin-babel": "^6.0.3",
         "@rollup/plugin-terser": "^0.4.3",
         "@rollup/plugin-typescript": "^11.1.2",
