@@ -11,7 +11,7 @@ jobs:
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@v4
-            - uses: marshallku/actions/setup-pnpm@master
+            - uses: marshallku/actions/setup/pnpm@master
             - run: pnpm publish --access=public
               env:
                   NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
