@@ -21,6 +21,12 @@ const zoom = (image: HTMLImageElement, { background, useMaximumSize = true, onTr
     const bg = document.createElement("div");
     const imageClone = document.createElement("img");
 
+    const handleKeyDown = (event: KeyboardEvent) => {
+        if (event.key === "Escape") {
+            removeImage();
+        }
+    };
+
     const removeImage = () => {
         bg.classList.remove("zoom-bg--reveal");
         imageClone.style.transform = "";
@@ -37,6 +43,7 @@ const zoom = (image: HTMLImageElement, { background, useMaximumSize = true, onTr
         imageClone.removeEventListener("click", removeImage);
         window.removeEventListener("scroll", removeImage);
         window.removeEventListener("resize", removeImage);
+        document.removeEventListener("keydown", handleKeyDown);
     };
 
     bg.classList.add("zoom-bg");
@@ -75,6 +82,9 @@ const zoom = (image: HTMLImageElement, { background, useMaximumSize = true, onTr
     });
     window.addEventListener("resize", removeImage, {
         once: true,
+        passive: true,
+    });
+    document.addEventListener("keydown", handleKeyDown, {
         passive: true,
     });
 
