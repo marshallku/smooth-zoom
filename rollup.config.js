@@ -33,7 +33,6 @@ export default [
     {
         input: "src/index.ts",
         output: {
-            name: "crtElt",
             file: pkg.types,
         },
         plugins: [dts()],
