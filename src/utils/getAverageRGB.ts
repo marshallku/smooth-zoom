@@ -5,11 +5,7 @@
  *
  */
 
-export default function getAverageRGB(
-    img: HTMLImageElement,
-    width: number,
-    height: number
-) {
+export default function getAverageRGB(img: HTMLImageElement, width: number, height: number) {
     const blockSize = 20;
     const rgb = { r: 0, g: 0, b: 0 };
     const canvas = document.createElement("canvas");
@@ -27,12 +23,7 @@ export default function getAverageRGB(
     try {
         ctx.drawImage(img, 0, 0, optimizedWidth, optimizedHeight);
 
-        const imageData = ctx.getImageData(
-            0,
-            0,
-            optimizedWidth,
-            optimizedHeight
-        );
+        const imageData = ctx.getImageData(0, 0, optimizedWidth, optimizedHeight);
 
         const { data } = imageData;
         const { length } = data;

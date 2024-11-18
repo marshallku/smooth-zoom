@@ -2,7 +2,7 @@ import { AllowedTarget, ZoomOption } from "./types/zoom";
 
 declare function Zoom(
     selector?: AllowedTarget,
-    options?: ZoomOption
+    options?: ZoomOption,
 ): {
     zoom: (img: HTMLImageElement) => void;
     attach: (target: AllowedTarget) => void;

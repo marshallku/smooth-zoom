@@ -1,14 +1,10 @@
 import { AllowedTarget, ZoomOption } from "./types/zoom";
 import getAverageRGB from "./utils/getAverageRGB";
 
-const zoom = (
-    image: HTMLImageElement,
-    { background, useMaximumSize = true, onTransitionEnd }: ZoomOption
-) => {
+const zoom = (image: HTMLImageElement, { background, useMaximumSize = true, onTransitionEnd }: ZoomOption) => {
     const src = image.currentSrc || image.src;
     const { srcset, naturalWidth } = image;
-    const { offsetWidth: screenWidth, clientHeight: screenHeight } =
-        document.documentElement;
+    const { offsetWidth: screenWidth, clientHeight: screenHeight } = document.documentElement;
     const { width, height, left, top } = image.getBoundingClientRect();
     const wrapX = screenWidth / 2 - left - width / 2;
     const wrapY = -top + (screenHeight - height) / 2;
@@ -17,9 +13,7 @@ const zoom = (
     const maxWidth = useMaximumSize
         ? Math.max(
               naturalWidth,
-              ...sizes
-                  .map((x) => +x.trim().replace("w", ""))
-                  .filter((x) => !Number.isNaN(x) && naturalWidth < x)
+              ...sizes.map((x) => +x.trim().replace("w", "")).filter((x) => !Number.isNaN(x) && naturalWidth < x),
           )
         : naturalWidth;
     const imageScale = maxWidth / width;
@@ -37,7 +31,7 @@ const zoom = (
                 image.classList.remove("zoom-original--hidden");
                 imageClone.remove();
             },
-            { once: true }
+            { once: true },
         );
         bg.removeEventListener("click", removeImage);
         imageClone.removeEventListener("click", removeImage);
@@ -73,7 +67,7 @@ const zoom = (
         () => {
             onTransitionEnd?.(imageClone);
         },
-        { once: true }
+        { once: true },
     );
     window.addEventListener("scroll", removeImage, {
         once: true,
@@ -142,9 +136,7 @@ export default function Zoom(target?: AllowedTarget, option: ZoomOption = {}) {
             const style = document.createElement("style");
             const { head } = document;
 
-            style.appendChild(
-                document.createTextNode(`${target}{cursor:zoom-in}`)
-            );
+            style.appendChild(document.createTextNode(`${target}{cursor:zoom-in}`));
             head.appendChild(style);
 
             return;
