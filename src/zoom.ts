@@ -1,4 +1,4 @@
-import { AllowedTarget, ZoomOption } from "./types/zoom";
+import type { AllowedTarget, ZoomOption } from "./types/zoom";
 import getAverageRGB from "./utils/getAverageRGB";
 
 const zoom = (image: HTMLImageElement, { background, useMaximumSize = true, onTransitionEnd }: ZoomOption) => {
