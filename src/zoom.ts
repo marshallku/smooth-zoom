@@ -1,5 +1,5 @@
 import type { AllowedTarget, ZoomOption } from "./types/zoom";
-import getAverageRGB from "./utils/getAverageRGB";
+import { getAverageRGB } from "./utils";
 
 const zoom = (image: HTMLImageElement, { background, useMaximumSize = true, onTransitionEnd }: ZoomOption) => {
     const src = image.currentSrc || image.src;
@@ -9,7 +9,7 @@ const zoom = (image: HTMLImageElement, { background, useMaximumSize = true, onTr
     const wrapX = screenWidth / 2 - left - width / 2;
     const wrapY = -top + (screenHeight - height) / 2;
     const maxScale = Math.min(screenWidth / width, screenHeight / height);
-    const sizes = srcset.match(/ ([0-9]+)w/gm) || [];
+    const sizes = srcset.match(/ (\d+)w/gm) || [];
     const maxWidth = useMaximumSize
         ? Math.max(
               naturalWidth,
