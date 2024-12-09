@@ -1,21 +1,16 @@
 import type { AllowedTarget, ZoomOption } from "./types/zoom";
-import { extractSizesFromSrcset, getAverageRGB } from "./utils";
+import { calculateScale, getAverageRGB, type ZoomBoard, type ZoomTarget } from "./utils";
 
 const zoom = (image: HTMLImageElement, { background, useMaximumSize = true, onTransitionEnd }: ZoomOption) => {
     const src = image.currentSrc || image.src;
     const { srcset, naturalWidth } = image;
     const { offsetWidth: screenWidth, clientHeight: screenHeight } = document.documentElement;
     const { width, height, left, top } = image.getBoundingClientRect();
-    const wrapX = screenWidth / 2 - left - width / 2;
-    const wrapY = -top + (screenHeight - height) / 2;
-    const maxScale = Math.min(screenWidth / width, screenHeight / height);
-    const maxWidth = useMaximumSize
-        ? Math.max(naturalWidth, ...extractSizesFromSrcset(srcset).filter((x) => naturalWidth < x))
-        : naturalWidth;
-    const imageScale = maxWidth / width;
-    const scale = Math.min(maxScale, imageScale);
     const bg = document.createElement("div");
     const imageClone = document.createElement("img");
+    const board: ZoomBoard = { width: screenWidth, height: screenHeight };
+    const target: ZoomTarget = { width, height, left, top };
+    const { scale, x: wrapX, y: wrapY } = calculateScale(board, target, { naturalWidth, srcset, useMaximumSize });
 
     const handleKeyDown = (event: KeyboardEvent) => {
         if (event.key === "Escape") {
