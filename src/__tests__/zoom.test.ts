@@ -146,6 +146,16 @@ describe("Zoom", () => {
             const background = document.querySelector(".zoom-bg");
             expect(background?.classList.contains("zoom-bg--reveal")).toBe(false);
         });
+
+        it("should remove zoom on escape keydown", () => {
+            Zoom(image, DEFAULT_OPTION);
+            fireEvent.click(image);
+
+            fireEvent.keyDown(document, { key: "Escape" });
+
+            const background = document.querySelector(".zoom-bg");
+            expect(background?.classList.contains("zoom-bg--reveal")).toBe(false);
+        });
     });
 
     describe("Edge cases", () => {
