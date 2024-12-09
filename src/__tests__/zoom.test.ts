@@ -1,4 +1,4 @@
-import { describe, test, expect, beforeEach, afterEach, vi } from "vitest";
+import { describe, it, expect, beforeEach, afterEach, vi } from "vitest";
 import { fireEvent } from "@testing-library/dom";
 import Zoom from "../zoom";
 import type { ZoomOption } from "../types/zoom";
@@ -59,21 +59,21 @@ describe("Zoom", () => {
     });
 
     describe("Initialization", () => {
-        test("should initialize with string selector", () => {
+        it("should initialize with string selector", () => {
             const zoomInstance = Zoom(".test-image", DEFAULT_OPTION);
             expect(zoomInstance.zoom).toBeDefined();
             expect(zoomInstance.attach).toBeDefined();
             expect(zoomInstance.detach).toBeDefined();
         });
 
-        test("should initialize with HTMLElement", () => {
+        it("should initialize with HTMLElement", () => {
             const zoomInstance = Zoom(image, DEFAULT_OPTION);
             expect(zoomInstance.zoom).toBeDefined();
         });
     });
 
     describe("Zoom functionality", () => {
-        test("should create zoom overlay when image is clicked", () => {
+        it("should create zoom overlay when image is clicked", () => {
             Zoom(image, DEFAULT_OPTION);
             fireEvent.click(image);
 
@@ -85,7 +85,7 @@ describe("Zoom", () => {
             expect(image.classList.contains("zoom-original--hidden")).toBe(true);
         });
 
-        test("should remove zoom when Escape key is pressed", () => {
+        it("should remove zoom when Escape key is pressed", () => {
             Zoom(image, DEFAULT_OPTION);
 
             fireEvent.click(image);
@@ -95,7 +95,7 @@ describe("Zoom", () => {
             expect(background?.classList.contains("zoom-bg--reveal")).toBe(false);
         });
 
-        test("should handle custom background color", () => {
+        it("should handle custom background color", () => {
             const customBg = "rgba(0, 0, 0, 0.8)";
             Zoom(image, { background: customBg });
             fireEvent.click(image);
@@ -106,7 +106,7 @@ describe("Zoom", () => {
     });
 
     describe("Event handlers", () => {
-        test("should call onTransitionEnd callback", () => {
+        it("should call onTransitionEnd callback", () => {
             const onTransitionEnd = vi.fn();
             Zoom(image, { ...DEFAULT_OPTION, onTransitionEnd });
             fireEvent.click(image);
@@ -117,7 +117,7 @@ describe("Zoom", () => {
             expect(onTransitionEnd).toHaveBeenCalled();
         });
 
-        test("should call onClick callback", () => {
+        it("should call onClick callback", () => {
             const onClick = vi.fn();
             Zoom(image, { ...DEFAULT_OPTION, onClick });
             fireEvent.click(image);
@@ -127,7 +127,7 @@ describe("Zoom", () => {
     });
 
     describe("Cleanup", () => {
-        test("should remove zoom on window scroll", () => {
+        it("should remove zoom on window scroll", () => {
             Zoom(image, DEFAULT_OPTION);
             fireEvent.click(image);
 
@@ -137,7 +137,7 @@ describe("Zoom", () => {
             expect(background?.classList.contains("zoom-bg--reveal")).toBe(false);
         });
 
-        test("should remove zoom on window resize", () => {
+        it("should remove zoom on window resize", () => {
             Zoom(image, DEFAULT_OPTION);
             fireEvent.click(image);
 
@@ -149,7 +149,7 @@ describe("Zoom", () => {
     });
 
     describe("Edge cases", () => {
-        test("should handle missing srcset", () => {
+        it("should handle missing srcset", () => {
             image.removeAttribute("srcset");
             Zoom(image, DEFAULT_OPTION);
             fireEvent.click(image);
